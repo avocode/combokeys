@@ -10,8 +10,8 @@ module.exports = function(grunt) {
                 reporter: 'Nyan',
                 run: true
             },
-            main: {
-                src: ['tests/main.html']
+            combokeys: {
+                src: ['tests/combokeys.html']
             }
         },
 
