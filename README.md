@@ -13,8 +13,6 @@ It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no exter
 
 It has support for ``keypress``, ``keydown``, and ``keyup`` events on specific keys, keyboard combinations, or key sequences.
 
-If you would like to donate to help support Combokeys development use [Gittip](https://www.gittip.com/ccampbell).
-
 ## Getting started
 
 1.  Include Combokeys on your page before the closing ``</body>`` tag
