@@ -2,6 +2,8 @@
 module.exports = function(grunt) {
     'use strict';
 
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -35,9 +37,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
-    grunt.loadNpmTasks('grunt-complexity');
-    grunt.loadNpmTasks('grunt-mocha');
 
     grunt.registerTask('default', [
         'complexity',
