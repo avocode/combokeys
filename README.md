@@ -1,6 +1,6 @@
-# Mousetrap
+# Combokeys
 
-Mousetrap is a simple library for handling keyboard shortcuts in Javascript.
+Combokeys is a simple library for handling keyboard shortcuts in Javascript.
 
 It is licensed under the Apache 2.0 license.
 
@@ -13,14 +13,14 @@ It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no exter
 
 It has support for ``keypress``, ``keydown``, and ``keyup`` events on specific keys, keyboard combinations, or key sequences.
 
-If you would like to donate to help support Mousetrap development use [Gittip](https://www.gittip.com/ccampbell).
+If you would like to donate to help support Combokeys development use [Gittip](https://www.gittip.com/ccampbell).
 
 ## Getting started
 
-1.  Include mousetrap on your page before the closing ``</body>`` tag
+1.  Include Combokeys on your page before the closing ``</body>`` tag
 
     ```html
-    <script src="/path/to/mousetrap.min.js"></script>
+    <script src="/path/to/combokeys.min.js"></script>
     ```
 
 2.  Add some keyboard events to listen for
@@ -28,15 +28,15 @@ If you would like to donate to help support Mousetrap development use [Gittip](h
     ```html
     <script>
         // single keys
-        Mousetrap.bind('4', function() { console.log('4'); });
-        Mousetrap.bind("?", function() { console.log('show shortcuts!'); });
-        Mousetrap.bind('esc', function() { console.log('escape'); }, 'keyup');
+        Combokeys.bind('4', function() { console.log('4'); });
+        Combokeys.bind("?", function() { console.log('show shortcuts!'); });
+        Combokeys.bind('esc', function() { console.log('escape'); }, 'keyup');
 
         // combinations
-        Mousetrap.bind('command+shift+k', function() { console.log('command shift k'); });
+        Combokeys.bind('command+shift+k', function() { console.log('command shift k'); });
 
         // map multiple combinations to the same callback
-        Mousetrap.bind(['command+k', 'ctrl+k'], function() {
+        Combokeys.bind(['command+k', 'ctrl+k'], function() {
             console.log('command k or control k');
 
             // return false to prevent default browser behavior
@@ -45,22 +45,22 @@ If you would like to donate to help support Mousetrap development use [Gittip](h
         });
 
         // gmail style sequences
-        Mousetrap.bind('g i', function() { console.log('go to inbox'); });
-        Mousetrap.bind('* a', function() { console.log('select all'); });
+        Combokeys.bind('g i', function() { console.log('go to inbox'); });
+        Combokeys.bind('* a', function() { console.log('select all'); });
 
         // konami code!
-        Mousetrap.bind('up up down down left right left right b a enter', function() {
+        Combokeys.bind('up up down down left right left right b a enter', function() {
             console.log('konami code');
         });
     </script>
     ```
 
-## Why Mousetrap?
+## Why Combokeys?
 
 There are a number of other similar libraries out there so what makes this one different?
 
 - There are no external dependencies, no framework is required
-- You are not limited to ``keydown`` events (You can specify ``keypress``, ``keydown``, or ``keyup`` or let Mousetrap choose for you).
+- You are not limited to ``keydown`` events (You can specify ``keypress``, ``keydown``, or ``keyup`` or let Combokeys choose for you).
 - You can bind key events directly to special keys such as ``?`` or ``*`` without having to specify ``shift+/`` or ``shift+8`` which are not consistent across all keyboards
 - It works with international keyboard layouts
 - You can bind Gmail like key sequences in addition to regular keys and key combinations
@@ -74,7 +74,7 @@ Unit tests run via <a href="http://visionmedia.github.io/mocha" target="_blank">
 
 ### Running in browser
 
-Download the repo and go to `tests/mousetrap.html` in your browser.
+Download the repo and go to `tests/index.html` in your browser.
 
 ### Running with Grunt and PhantomJS
 

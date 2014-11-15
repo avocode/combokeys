@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Mousetrap is a simple keyboard shortcut library for Javascript with
+ * Combokeys is a simple keyboard shortcut library for Javascript with
  * no external dependencies
  *
  * @version 1.4.6
@@ -139,7 +139,7 @@
         _REVERSE_MAP,
 
         /**
-         * a list of all the callbacks setup via Mousetrap.bind()
+         * a list of all the callbacks setup via Combokeys.bind()
          *
          * @type {Object}
          */
@@ -445,7 +445,7 @@
     function _fireCallback(callback, e, combo, sequence) {
 
         // if this event should not happen stop here
-        if (Mousetrap.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
+        if (Combokeys.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
             return;
         }
 
@@ -570,7 +570,7 @@
             return;
         }
 
-        Mousetrap.handleKey(character, _eventModifiers(e), e);
+        Combokeys.handleKey(character, _eventModifiers(e), e);
     }
 
     /**
@@ -789,7 +789,7 @@
      */
     function _bindSingle(combination, callback, action, sequenceName, level) {
 
-        // store a direct mapped reference for use with Mousetrap.trigger
+        // store a direct mapped reference for use with Combokeys.trigger
         _directMap[combination + ':' + action] = callback;
 
         // make sure multiple spaces in a row become a single space
@@ -849,10 +849,10 @@
     _addEvent(document, 'keydown', _handleKeyEvent);
     _addEvent(document, 'keyup', _handleKeyEvent);
 
-    var Mousetrap = {
+    var Combokeys = {
 
         /**
-         * binds an event to mousetrap
+         * binds an event to Combokeys
          *
          * can be a single key, a combination of keys separated with +,
          * an array of keys, or a sequence of keys separated by spaces
@@ -872,7 +872,7 @@
         },
 
         /**
-         * unbinds an event to mousetrap
+         * unbinds an event to Combokeys
          *
          * the unbinding sets the callback function of the specified key combo
          * to an empty function and deletes the corresponding key in the
@@ -889,7 +889,7 @@
          * @returns void
          */
         unbind: function(keys, action) {
-            return Mousetrap.bind(keys, function() {}, action);
+            return Combokeys.bind(keys, function() {}, action);
         },
 
         /**
@@ -928,8 +928,8 @@
         */
         stopCallback: function(e, element) {
 
-            // if the element has the class "mousetrap" then no need to stop
-            if ((' ' + element.className + ' ').indexOf(' mousetrap ') > -1) {
+            // if the element has the class "combokeys" then no need to stop
+            if ((' ' + element.className + ' ').indexOf(' combokeys ') > -1) {
                 return false;
             }
 
@@ -943,11 +943,11 @@
         handleKey: _handleKey
     };
 
-    // expose mousetrap to the global object
-    window.Mousetrap = Mousetrap;
+    // expose Combokeys to the global object
+    window.Combokeys = Combokeys;
 
-    // expose mousetrap as an AMD module
+    // expose Combokeys as an AMD module
     if (typeof define === 'function' && define.amd) {
-        define(Mousetrap);
+        define(Combokeys);
     }
 }) (window, document);

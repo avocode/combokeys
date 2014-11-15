@@ -10,8 +10,8 @@ module.exports = function(grunt) {
                 reporter: 'Nyan',
                 run: true
             },
-            mousetrap: {
-                src: ['tests/mousetrap.html']
+            main: {
+                src: ['tests/main.html']
             }
         },
 
@@ -24,14 +24,13 @@ module.exports = function(grunt) {
             },
             generic: {
                 src: [
-                    'mousetrap.js'
+                    'combokeys.js'
                 ]
             },
             plugins: {
                 src: [
                     'plugins/**/*.js',
                     '!plugins/**/tests/**',
-                    '!plugins/**/*.min.js'
                 ]
             }
         }
