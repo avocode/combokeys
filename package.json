@@ -1,8 +1,8 @@
 {
-  "name": "mousetrap",
+  "name": "combokeys",
   "version": "1.4.6",
   "description": "Simple library for handling keyboard shortcuts",
-  "main": "mousetrap.js",
+  "main": "index.js",
   "directories": {
     "test": "tests"
   },

@@ -1,10 +1,10 @@
 /**
- * Overwrites default Mousetrap.bind method to optionally accept
+ * Overwrites default Combokeys.bind method to optionally accept
  * an object to bind multiple key events in a single call
  *
  * You can pass it in like:
  *
- * Mousetrap.bind({
+ * Combokeys.bind({
  *     'a': function() { console.log('a'); },
  *     'b': function() { console.log('b'); }
  * });
@@ -13,9 +13,9 @@
  * as a second argument
  *
  */
-/* global Mousetrap:true */
-Mousetrap = (function(Mousetrap) {
-    var self = Mousetrap,
+/* global Combokeys:true */
+Combokeys = (function(Combokeys) {
+    var self = Combokeys,
         _oldBind = self.bind,
         args;
 
@@ -36,4 +36,4 @@ Mousetrap = (function(Mousetrap) {
     };
 
     return self;
-}) (Mousetrap);
+}) (Combokeys);

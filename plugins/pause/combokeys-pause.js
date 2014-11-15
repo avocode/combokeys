@@ -1,11 +1,11 @@
 /**
- * adds a pause and unpause method to Mousetrap
+ * adds a pause and unpause method to Combokeys
  * this allows you to enable or disable keyboard shortcuts
- * without having to reset Mousetrap and rebind everything
+ * without having to reset Combokeys and rebind everything
  */
-/* global Mousetrap:true */
-Mousetrap = (function(Mousetrap) {
-    var self = Mousetrap,
+/* global Combokeys:true */
+Combokeys = (function(Combokeys) {
+    var self = Combokeys,
         _originalStopCallback = self.stopCallback,
         enabled = true;
 
@@ -26,4 +26,4 @@ Mousetrap = (function(Mousetrap) {
     };
 
     return self;
-}) (Mousetrap);
+}) (Combokeys);

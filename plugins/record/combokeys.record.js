@@ -1,9 +1,9 @@
 /**
- * This extension allows you to record a sequence using Mousetrap.
+ * This extension allows you to record a sequence using Combokeys.
  *
  * @author Dan Tao <daniel.tao@gmail.com>
  */
-(function(Mousetrap) {
+(function(Combokeys) {
     /**
      * the sequence currently being recorded
      *
@@ -41,12 +41,12 @@
         _recordTimer = null,
 
         /**
-         * the original handleKey method to override when Mousetrap.record() is
+         * the original handleKey method to override when Combokeys.record() is
          * called
          *
          * @type {Function}
          */
-        _origHandleKey = Mousetrap.handleKey;
+        _origHandleKey = Combokeys.handleKey;
 
     /**
      * handles a character key event
@@ -143,7 +143,7 @@
 
     /**
      * finishes the current recording, passes the recorded sequence to the stored
-     * callback, and sets Mousetrap.handleKey back to its original function
+     * callback, and sets Combokeys.handleKey back to its original function
      *
      * @returns void
      */
@@ -158,7 +158,7 @@
         _recordedSequenceCallback = null;
         _currentRecordedKeys = [];
 
-        Mousetrap.handleKey = _origHandleKey;
+        Combokeys.handleKey = _origHandleKey;
     }
 
     /**
@@ -181,9 +181,9 @@
      * @param {Function} callback
      * @returns void
      */
-    Mousetrap.record = function(callback) {
-        Mousetrap.handleKey = _handleKey;
+    Combokeys.record = function(callback) {
+        Combokeys.handleKey = _handleKey;
         _recordedSequenceCallback = callback;
     };
 
-})(Mousetrap);
+})(Combokeys);

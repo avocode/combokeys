@@ -1,17 +1,17 @@
 /**
- * adds a bindGlobal method to Mousetrap that allows you to
+ * adds a bindGlobal method to Combokeys that allows you to
  * bind specific keyboard shortcuts that will still work
  * inside a text input field
  *
  * usage:
- * Mousetrap.bindGlobal('ctrl+s', _saveChanges);
+ * Combokeys.bindGlobal('ctrl+s', _saveChanges);
  */
-/* global Mousetrap:true */
-Mousetrap = (function(Mousetrap) {
+/* global Combokeys:true */
+Combokeys = (function(Combokeys) {
     var _globalCallbacks = {},
-        _originalStopCallback = Mousetrap.stopCallback;
+        _originalStopCallback = Combokeys.stopCallback;
 
-    Mousetrap.stopCallback = function(e, element, combo, sequence) {
+    Combokeys.stopCallback = function(e, element, combo, sequence) {
         if (_globalCallbacks[combo] || _globalCallbacks[sequence]) {
             return false;
         }
@@ -19,8 +19,8 @@ Mousetrap = (function(Mousetrap) {
         return _originalStopCallback(e, element, combo);
     };
 
-    Mousetrap.bindGlobal = function(keys, callback, action) {
-        Mousetrap.bind(keys, callback, action);
+    Combokeys.bindGlobal = function(keys, callback, action) {
+        Combokeys.bind(keys, callback, action);
 
         if (keys instanceof Array) {
             for (var i = 0; i < keys.length; i++) {
@@ -32,5 +32,5 @@ Mousetrap = (function(Mousetrap) {
         _globalCallbacks[keys] = true;
     };
 
-    return Mousetrap;
-}) (Mousetrap);
+    return Combokeys;
+}) (Combokeys);

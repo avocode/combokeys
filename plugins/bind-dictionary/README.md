@@ -5,7 +5,7 @@ This extension overwrites the default bind behavior and allows you to bind multi
 Usage looks like:
 
 ```javascript
-Mousetrap.bind({
+Combokeys.bind({
     'a': function() { console.log('a'); },
     'b': function() { console.log('b'); }
 });
