@@ -24,7 +24,7 @@ This fork's author intends to review pull–requests.
 Changes since forking include:
 
 1. Rebranding
-2. Removal of minifications
+1. Removal of minifications
 
 ## Getting started
 
