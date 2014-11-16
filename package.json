@@ -30,6 +30,8 @@
     "grunt-eslint": "^2.0.0",
     "load-grunt-tasks": "^1.0.0",
     "mocha": "^2.0.1",
-    "sinon": "^1.12.1"
+    "phantomjs": "^1.9.12",
+    "sinon": "^1.12.1",
+    "zuul": "^1.13.1"
   }
 }
