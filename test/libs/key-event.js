@@ -18,7 +18,7 @@ var KeyEvent = function(data, type) {
 };
 
 KeyEvent.prototype.toNative = function() {
-    var event = document.createEventObject ? document.createEventObject() : document.createEvent('Events');
+    var event = document.createEvent ? document.createEvent("Event") : document.createEventObject();
 
     if (event.initEvent) {
         event.initEvent(this.type, true, true);
