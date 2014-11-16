@@ -846,7 +846,7 @@ addEvent(document, "keypress", handleKeyEvent);
 addEvent(document, "keydown", handleKeyEvent);
 addEvent(document, "keyup", handleKeyEvent);
 
-module.exports = {
+var Combokeys = {
 
     /**
      * binds an event to Combokeys
@@ -939,3 +939,5 @@ module.exports = {
      */
     handleKey: handleKey
 };
+
+module.exports = Combokeys;

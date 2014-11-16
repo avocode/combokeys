@@ -1,6 +1,10 @@
 /* eslint-env node, browsesr, mocha */
 /* eslint no-unused-expressions:0 */
-var expect = chai.expect;
+var expect = require("chai").expect;
+var sinon = require("sinon");
+var Combokeys = require("../combokeys");
+var KeyEvent = require("./libs/key-event");
+
 afterEach(function() {
     "use strict";
     Combokeys.reset();

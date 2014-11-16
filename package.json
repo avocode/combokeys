@@ -23,10 +23,12 @@
   "gitHead": "c202a0bd4967d5a3064f9cb376db51dec9345336",
   "readmeFilename": "README.md",
   "devDependencies": {
+    "chai": "^1.10.0",
     "grunt": "~0.4.1",
     "grunt-complexity": "~0.1.2",
     "grunt-eslint": "^2.0.0",
-    "grunt-mocha": "~0.3.1",
-    "load-grunt-tasks": "^1.0.0"
+    "load-grunt-tasks": "^1.0.0",
+    "mocha": "^2.0.1",
+    "sinon": "^1.12.1"
   }
 }

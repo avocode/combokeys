@@ -16,16 +16,6 @@ module.exports = function(grunt) {
             ]
         },
 
-        mocha: {
-            options: {
-                reporter: "Nyan",
-                run: true
-            },
-            combokeys: {
-                src: ["test/combokeys.html"]
-            }
-        },
-
         complexity: {
             options: {
                 errorsOnly: false,
