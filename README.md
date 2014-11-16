@@ -13,6 +13,19 @@ It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no exter
 
 It has support for ``keypress``, ``keydown``, and ``keyup`` events on specific keys, keyboard combinations, or key sequences.
 
+## Fork notice
+
+This project was forked from [ccampbell/mousetrap](https://github.com/ccampbell/mousetrap).
+
+It was forked because pull–requests were not being reviewed.
+
+This fork's author intends to review pull–requests.
+
+Changes since forking include:
+
+1. Rebranding
+1. Removal of minifications
+
 ## Getting started
 
 1.  Include Combokeys on your page before the closing ``</body>`` tag
