@@ -1,11 +1,10 @@
 # Plugins
 
-Plugins extend the functionality of Combokeys.  To use a plugin just include the plugin after combokeys.
+Plugins extend the functionality of Combokeys.
 
-```html
-<script src="combokeys.js"></script>
-<script src="combokeys-record.js"></script>
-```
+Since this project was forked from
+[ccampbell/mousetrap](https://github.com/ccampbell/mousetrap)
+and was converted to CommonJS, the plugins were not converted to CommonJS.
 
 ## Bind dictionary
 
