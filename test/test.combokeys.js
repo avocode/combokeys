@@ -3,6 +3,8 @@
 /* global
     Event
 */
+require("es5-shim/es5-shim");
+require("es5-shim/es5-sham");
 var expect = require("chai").expect;
 var sinon = require("sinon");
 var Combokeys = require("../combokeys");

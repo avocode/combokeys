@@ -24,6 +24,7 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^1.10.0",
+    "es5-shim": "^4.0.3",
     "grunt": "~0.4.1",
     "grunt-complexity": "~0.1.2",
     "grunt-eslint": "^2.0.0",
