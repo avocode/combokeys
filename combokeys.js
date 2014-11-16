@@ -746,7 +746,7 @@
         keys = keysFromString(combination);
 
         for (j = 0; j < keys.length; ++j) {
-            key = keys[i];
+            key = keys[j];
 
             // normalize key names
             if (SPECIAL_ALIASES[key]) {
