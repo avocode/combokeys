@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                 run: true
             },
             combokeys: {
-                src: ["tests/combokeys.html"]
+                src: ["test/combokeys.html"]
             }
         },
 
