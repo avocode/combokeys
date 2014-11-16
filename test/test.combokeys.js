@@ -1,4 +1,4 @@
-/* eslint-env node, browsesr, mocha */
+/* eslint-env node, browser, mocha */
 /* eslint no-unused-expressions:0 */
 var expect = require("chai").expect;
 var sinon = require("sinon");
