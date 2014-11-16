@@ -1,112 +1,9 @@
 /* eslint-env node, browser */
 "use strict";
-
-/**
- * mapping of special keycodes to their corresponding keys
- *
- * everything in this dictionary cannot use keypress events
- * so it has to be here to map to the correct keycodes for
- * keyup/keydown events
- *
- * @type {Object}
- */
-var MAP = {
-        8: "backspace",
-        9: "tab",
-        13: "enter",
-        16: "shift",
-        17: "ctrl",
-        18: "alt",
-        20: "capslock",
-        27: "esc",
-        32: "space",
-        33: "pageup",
-        34: "pagedown",
-        35: "end",
-        36: "home",
-        37: "left",
-        38: "up",
-        39: "right",
-        40: "down",
-        45: "ins",
-        46: "del",
-        91: "meta",
-        93: "meta",
-        224: "meta"
-    },
-
-    /**
-     * mapping for special characters so they can support
-     *
-     * this dictionary is only used incase you want to bind a
-     * keyup or keydown event to one of these keys
-     *
-     * @type {Object}
-     */
-    KEYCODE_MAP = {
-        106: "*",
-        107: "+",
-        109: "-",
-        110: ".",
-        111: "/",
-        186: ";",
-        187: "=",
-        188: ",",
-        189: "-",
-        190: ".",
-        191: "/",
-        192: "`",
-        219: "[",
-        220: "\\",
-        221: "]",
-        222: "'"
-    },
-
-    /**
-     * this is a mapping of keys that require shift on a US keypad
-     * back to the non shift equivelents
-     *
-     * this is so you can use keyup events with these keys
-     *
-     * note that this will only work reliably on US keyboards
-     *
-     * @type {Object}
-     */
-    SHIFT_MAP = {
-        "~": "`",
-        "!": "1",
-        "@": "2",
-        "#": "3",
-        "$": "4",
-        "%": "5",
-        "^": "6",
-        "&": "7",
-        "*": "8",
-        "(": "9",
-        ")": "0",
-        "_": "-",
-        "+": "=",
-        ":": ";",
-        "\"": "'",
-        "<": ",",
-        ">": ".",
-        "?": "/",
-        "|": "\\"
-    },
-
-    /**
-     * this is a list of special strings you can use to map
-     * to modifier keys when you specify your keyboard shortcuts
-     *
-     * @type {Object}
-     */
-    SPECIAL_ALIASES = {
-        "option": "alt",
-        "command": "meta",
-        "return": "enter",
-        "escape": "esc",
-        "mod": /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? "meta" : "ctrl"
-    },
+var SPECIAL_KEYS_MAP = require("./constants/special-keys-map"),
+    SPECIAL_CHARACTERS_MAP = require("./constants/special-characters-map"),
+    SHIFT_MAP = require("./constants/shift-map.js"),
+    SPECIAL_ALIASES = require("./constants/special-aliases.js"),
 
     /**
      * variable to store the flipped version of MAP from above
@@ -173,14 +70,14 @@ var MAP = {
  * programatically
  */
 for (var i = 1; i < 20; ++i) {
-    MAP[111 + i] = "f" + i;
+    SPECIAL_KEYS_MAP[111 + i] = "f" + i;
 }
 
 /**
  * loop through to map numbers on the numeric keypad
  */
 for (i = 0; i <= 9; ++i) {
-    MAP[i + 96] = i;
+    SPECIAL_KEYS_MAP[i + 96] = i;
 }
 
 /**
@@ -229,12 +126,12 @@ function characterFromEvent(e) {
     }
 
     // for non keypress events the special maps are needed
-    if (MAP[e.which]) {
-        return MAP[e.which];
+    if (SPECIAL_KEYS_MAP[e.which]) {
+        return SPECIAL_KEYS_MAP[e.which];
     }
 
-    if (KEYCODE_MAP[e.which]) {
-        return KEYCODE_MAP[e.which];
+    if (SPECIAL_CHARACTERS_MAP[e.which]) {
+        return SPECIAL_CHARACTERS_MAP[e.which];
     }
 
     // if it is not in the special map
@@ -584,7 +481,7 @@ function resetSequenceTimer() {
 function getReverseMap() {
     if (!REVERSE_MAP) {
         REVERSE_MAP = {};
-        for (var key in MAP) {
+        for (var key in SPECIAL_KEYS_MAP) {
 
             // pull out the numeric keypad from here cause keypress should
             // be able to detect the keys from the character
@@ -592,8 +489,8 @@ function getReverseMap() {
                 continue;
             }
 
-            if (MAP.hasOwnProperty(key)) {
-                REVERSE_MAP[MAP[key]] = key;
+            if (SPECIAL_KEYS_MAP.hasOwnProperty(key)) {
+                REVERSE_MAP[SPECIAL_KEYS_MAP[key]] = key;
             }
         }
     }

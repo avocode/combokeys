@@ -13,6 +13,7 @@ module.exports = function(grunt) {
                 "combokeys.js",
                 "plugins/**/*.js",
                 "test/test.*.js"
+                "constants/**/*.js"
             ]
         },
 
