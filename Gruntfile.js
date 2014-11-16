@@ -1,19 +1,27 @@
-/*jshint node:true */
+/* eslint-env node */
 module.exports = function(grunt) {
-    'use strict';
+    "use strict";
 
-    require('load-grunt-tasks')(grunt);
+    require("load-grunt-tasks")(grunt);
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON("package.json"),
+
+        eslint: {
+            target: [
+                "Gruntfile.js",
+                "combokeys.js",
+                "plugins/**/*.js"
+            ]
+        },
 
         mocha: {
             options: {
-                reporter: 'Nyan',
+                reporter: "Nyan",
                 run: true
             },
             combokeys: {
-                src: ['tests/combokeys.html']
+                src: ["tests/combokeys.html"]
             }
         },
 
@@ -26,20 +34,21 @@ module.exports = function(grunt) {
             },
             generic: {
                 src: [
-                    'combokeys.js'
+                    "combokeys.js"
                 ]
             },
             plugins: {
                 src: [
-                    'plugins/**/*.js',
-                    '!plugins/**/tests/**',
+                    "plugins/**/*.js",
+                    "!plugins/**/tests/**"
                 ]
             }
         }
     });
 
-    grunt.registerTask('default', [
-        'complexity',
-        'mocha'
+    grunt.registerTask("default", [
+        "eslint",
+        "complexity",
+        "mocha"
     ]);
 };

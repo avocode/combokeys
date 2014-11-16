@@ -1,4 +1,4 @@
-/*global define:false */
+/* eslint-env node, browser */
 /**
  * Copyright 2013 Craig Campbell
  *
@@ -20,7 +20,8 @@
  * @version 1.4.6
  * @url craig.is/killing/mice
  */
-(function(window, document, undefined) {
+(function(window, document) {
+    "use strict";
 
     /**
      * mapping of special keycodes to their corresponding keys
@@ -31,29 +32,29 @@
      *
      * @type {Object}
      */
-    var _MAP = {
-            8: 'backspace',
-            9: 'tab',
-            13: 'enter',
-            16: 'shift',
-            17: 'ctrl',
-            18: 'alt',
-            20: 'capslock',
-            27: 'esc',
-            32: 'space',
-            33: 'pageup',
-            34: 'pagedown',
-            35: 'end',
-            36: 'home',
-            37: 'left',
-            38: 'up',
-            39: 'right',
-            40: 'down',
-            45: 'ins',
-            46: 'del',
-            91: 'meta',
-            93: 'meta',
-            224: 'meta'
+    var MAP = {
+            8: "backspace",
+            9: "tab",
+            13: "enter",
+            16: "shift",
+            17: "ctrl",
+            18: "alt",
+            20: "capslock",
+            27: "esc",
+            32: "space",
+            33: "pageup",
+            34: "pagedown",
+            35: "end",
+            36: "home",
+            37: "left",
+            38: "up",
+            39: "right",
+            40: "down",
+            45: "ins",
+            46: "del",
+            91: "meta",
+            93: "meta",
+            224: "meta"
         },
 
         /**
@@ -64,23 +65,23 @@
          *
          * @type {Object}
          */
-        _KEYCODE_MAP = {
-            106: '*',
-            107: '+',
-            109: '-',
-            110: '.',
-            111 : '/',
-            186: ';',
-            187: '=',
-            188: ',',
-            189: '-',
-            190: '.',
-            191: '/',
-            192: '`',
-            219: '[',
-            220: '\\',
-            221: ']',
-            222: '\''
+        KEYCODE_MAP = {
+            106: "*",
+            107: "+",
+            109: "-",
+            110: ".",
+            111: "/",
+            186: ";",
+            187: "=",
+            188: ",",
+            189: "-",
+            190: ".",
+            191: "/",
+            192: "`",
+            219: "[",
+            220: "\\",
+            221: "]",
+            222: "'"
         },
 
         /**
@@ -93,26 +94,26 @@
          *
          * @type {Object}
          */
-        _SHIFT_MAP = {
-            '~': '`',
-            '!': '1',
-            '@': '2',
-            '#': '3',
-            '$': '4',
-            '%': '5',
-            '^': '6',
-            '&': '7',
-            '*': '8',
-            '(': '9',
-            ')': '0',
-            '_': '-',
-            '+': '=',
-            ':': ';',
-            '\"': '\'',
-            '<': ',',
-            '>': '.',
-            '?': '/',
-            '|': '\\'
+        SHIFT_MAP = {
+            "~": "`",
+            "!": "1",
+            "@": "2",
+            "#": "3",
+            "$": "4",
+            "%": "5",
+            "^": "6",
+            "&": "7",
+            "*": "8",
+            "(": "9",
+            ")": "0",
+            "_": "-",
+            "+": "=",
+            ":": ";",
+            "\"": "'",
+            "<": ",",
+            ">": ".",
+            "?": "/",
+            "|": "\\"
         },
 
         /**
@@ -121,36 +122,36 @@
          *
          * @type {Object}
          */
-        _SPECIAL_ALIASES = {
-            'option': 'alt',
-            'command': 'meta',
-            'return': 'enter',
-            'escape': 'esc',
-            'mod': /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? 'meta' : 'ctrl'
+        SPECIAL_ALIASES = {
+            "option": "alt",
+            "command": "meta",
+            "return": "enter",
+            "escape": "esc",
+            "mod": /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? "meta" : "ctrl"
         },
 
         /**
-         * variable to store the flipped version of _MAP from above
+         * variable to store the flipped version of MAP from above
          * needed to check if we should use keypress or not when no action
          * is specified
          *
          * @type {Object|undefined}
          */
-        _REVERSE_MAP,
+        REVERSE_MAP,
 
         /**
          * a list of all the callbacks setup via Combokeys.bind()
          *
          * @type {Object}
          */
-        _callbacks = {},
+        callbacks = {},
 
         /**
          * direct map of string combinations to callbacks used for trigger()
          *
          * @type {Object}
          */
-        _directMap = {},
+        directMap = {},
 
         /**
          * keeps track of what level each sequence is at since multiple
@@ -158,28 +159,28 @@
          *
          * @type {Object}
          */
-        _sequenceLevels = {},
+        sequenceLevels = {},
 
         /**
          * variable to store the setTimeout call
          *
          * @type {null|number}
          */
-        _resetTimer,
+        resetTimer,
 
         /**
          * temporary state where we will ignore the next keyup
          *
          * @type {boolean|string}
          */
-        _ignoreNextKeyup = false,
+        ignoreNextKeyup = false,
 
         /**
          * temporary state where we will ignore the next keypress
          *
          * @type {boolean}
          */
-        _ignoreNextKeypress = false,
+        ignoreNextKeypress = false,
 
         /**
          * are we currently inside of a sequence?
@@ -187,21 +188,21 @@
          *
          * @type {boolean|string}
          */
-        _nextExpectedAction = false;
+        nextExpectedAction = false;
 
     /**
      * loop through the f keys, f1 to f19 and add them to the map
      * programatically
      */
     for (var i = 1; i < 20; ++i) {
-        _MAP[111 + i] = 'f' + i;
+        MAP[111 + i] = "f" + i;
     }
 
     /**
      * loop through to map numbers on the numeric keypad
      */
     for (i = 0; i <= 9; ++i) {
-        _MAP[i + 96] = i;
+        MAP[i + 96] = i;
     }
 
     /**
@@ -212,13 +213,13 @@
      * @param {Function} callback
      * @returns void
      */
-    function _addEvent(object, type, callback) {
+    function addEvent(object, type, callback) {
         if (object.addEventListener) {
             object.addEventListener(type, callback, false);
             return;
         }
 
-        object.attachEvent('on' + type, callback);
+        object.attachEvent("on" + type, callback);
     }
 
     /**
@@ -227,10 +228,10 @@
      * @param {Event} e
      * @return {string}
      */
-    function _characterFromEvent(e) {
+    function characterFromEvent(e) {
 
         // for keypress events we should return the character as is
-        if (e.type == 'keypress') {
+        if (e.type === "keypress") {
             var character = String.fromCharCode(e.which);
 
             // if the shift key is not pressed then it is safe to assume
@@ -250,12 +251,12 @@
         }
 
         // for non keypress events the special maps are needed
-        if (_MAP[e.which]) {
-            return _MAP[e.which];
+        if (MAP[e.which]) {
+            return MAP[e.which];
         }
 
-        if (_KEYCODE_MAP[e.which]) {
-            return _KEYCODE_MAP[e.which];
+        if (KEYCODE_MAP[e.which]) {
+            return KEYCODE_MAP[e.which];
         }
 
         // if it is not in the special map
@@ -273,8 +274,8 @@
      * @param {Array} modifiers2
      * @returns {boolean}
      */
-    function _modifiersMatch(modifiers1, modifiers2) {
-        return modifiers1.sort().join(',') === modifiers2.sort().join(',');
+    function modifiersMatch(modifiers1, modifiers2) {
+        return modifiers1.sort().join(",") === modifiers2.sort().join(",");
     }
 
     /**
@@ -283,22 +284,22 @@
      * @param {Object} doNotReset
      * @returns void
      */
-    function _resetSequences(doNotReset) {
+    function resetSequences(doNotReset) {
         doNotReset = doNotReset || {};
 
         var activeSequences = false,
             key;
 
-        for (key in _sequenceLevels) {
+        for (key in sequenceLevels) {
             if (doNotReset[key]) {
                 activeSequences = true;
                 continue;
             }
-            _sequenceLevels[key] = 0;
+            sequenceLevels[key] = 0;
         }
 
         if (!activeSequences) {
-            _nextExpectedAction = false;
+            nextExpectedAction = false;
         }
     }
 
@@ -314,36 +315,36 @@
      * @param {number=} level
      * @returns {Array}
      */
-    function _getMatches(character, modifiers, e, sequenceName, combination, level) {
-        var i,
+    function getMatches(character, modifiers, e, sequenceName, combination, level) {
+        var j,
             callback,
             matches = [],
             action = e.type;
 
         // if there are no events related to this keycode
-        if (!_callbacks[character]) {
+        if (!callbacks[character]) {
             return [];
         }
 
         // if a modifier key is coming up on its own we should allow it
-        if (action == 'keyup' && _isModifier(character)) {
+        if (action === "keyup" && isModifier(character)) {
             modifiers = [character];
         }
 
         // loop through all callbacks for the key that was pressed
         // and see if any of them match
-        for (i = 0; i < _callbacks[character].length; ++i) {
-            callback = _callbacks[character][i];
+        for (j = 0; j < callbacks[character].length; ++j) {
+            callback = callbacks[character][j];
 
             // if a sequence name is not specified, but this is a sequence at
             // the wrong level then move onto the next match
-            if (!sequenceName && callback.seq && _sequenceLevels[callback.seq] != callback.level) {
+            if (!sequenceName && callback.seq && sequenceLevels[callback.seq] !== callback.level) {
                 continue;
             }
 
             // if the action we are looking for doesn't match the action we got
             // then we should keep going
-            if (action != callback.action) {
+            if (action !== callback.action) {
                 continue;
             }
 
@@ -354,17 +355,17 @@
             // chrome will not fire a keypress if meta or control is down
             // safari will fire a keypress if meta or meta+shift is down
             // firefox will fire a keypress if meta or control is down
-            if ((action == 'keypress' && !e.metaKey && !e.ctrlKey) || _modifiersMatch(modifiers, callback.modifiers)) {
+            if ((action === "keypress" && !e.metaKey && !e.ctrlKey) || modifiersMatch(modifiers, callback.modifiers)) {
 
                 // when you bind a combination or sequence a second time it
                 // should overwrite the first one.  if a sequenceName or
                 // combination is specified in this call it does just that
                 //
                 // @todo make deleting its own method?
-                var deleteCombo = !sequenceName && callback.combo == combination;
-                var deleteSequence = sequenceName && callback.seq == sequenceName && callback.level == level;
+                var deleteCombo = !sequenceName && callback.combo === combination;
+                var deleteSequence = sequenceName && callback.seq === sequenceName && callback.level === level;
                 if (deleteCombo || deleteSequence) {
-                    _callbacks[character].splice(i, 1);
+                    callbacks[character].splice(i, 1);
                 }
 
                 matches.push(callback);
@@ -380,23 +381,23 @@
      * @param {Event} e
      * @returns {Array}
      */
-    function _eventModifiers(e) {
+    function eventModifiers(e) {
         var modifiers = [];
 
         if (e.shiftKey) {
-            modifiers.push('shift');
+            modifiers.push("shift");
         }
 
         if (e.altKey) {
-            modifiers.push('alt');
+            modifiers.push("alt");
         }
 
         if (e.ctrlKey) {
-            modifiers.push('ctrl');
+            modifiers.push("ctrl");
         }
 
         if (e.metaKey) {
-            modifiers.push('meta');
+            modifiers.push("meta");
         }
 
         return modifiers;
@@ -408,7 +409,7 @@
      * @param {Event} e
      * @returns void
      */
-    function _preventDefault(e) {
+    function preventDefault(e) {
         if (e.preventDefault) {
             e.preventDefault();
             return;
@@ -423,7 +424,7 @@
      * @param {Event} e
      * @returns void
      */
-    function _stopPropagation(e) {
+    function stopPropagation(e) {
         if (e.stopPropagation) {
             e.stopPropagation();
             return;
@@ -442,7 +443,7 @@
      * @param {Event} e
      * @returns void
      */
-    function _fireCallback(callback, e, combo, sequence) {
+    function fireCallback(callback, e, combo, sequence) {
 
         // if this event should not happen stop here
         if (Combokeys.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
@@ -450,8 +451,8 @@
         }
 
         if (callback(e, combo) === false) {
-            _preventDefault(e);
-            _stopPropagation(e);
+            preventDefault(e);
+            stopPropagation(e);
         }
     }
 
@@ -463,29 +464,29 @@
      * @param {Event} e
      * @returns void
      */
-    function _handleKey(character, modifiers, e) {
-        var callbacks = _getMatches(character, modifiers, e),
-            i,
+    function handleKey(character, modifiers, e) {
+        var eCallbacks = getMatches(character, modifiers, e),
+            j,
             doNotReset = {},
             maxLevel = 0,
             processedSequenceCallback = false;
 
         // Calculate the maxLevel for sequences so we can only execute the longest callback sequence
-        for (i = 0; i < callbacks.length; ++i) {
-            if (callbacks[i].seq) {
-                maxLevel = Math.max(maxLevel, callbacks[i].level);
+        for (j = 0; j < eCallbacks.length; ++j) {
+            if (eCallbacks[j].seq) {
+                maxLevel = Math.max(maxLevel, eCallbacks[j].level);
             }
         }
 
         // loop through matching callbacks for this key event
-        for (i = 0; i < callbacks.length; ++i) {
+        for (j = 0; j < eCallbacks.length; ++j) {
 
             // fire for all sequence callbacks
             // this is because if for example you have multiple sequences
             // bound such as "g i" and "g t" they both need to fire the
             // callback for matching g cause otherwise you can only ever
             // match the first one
-            if (callbacks[i].seq) {
+            if (eCallbacks[j].seq) {
 
                 // only fire callbacks for the maxLevel to prevent
                 // subsequences from also firing
@@ -494,23 +495,23 @@
                 // even though 'option b' is part of the other sequence
                 //
                 // any sequences that do not match here will be discarded
-                // below by the _resetSequences call
-                if (callbacks[i].level != maxLevel) {
+                // below by the resetSequences call
+                if (eCallbacks[j].level !== maxLevel) {
                     continue;
                 }
 
                 processedSequenceCallback = true;
 
                 // keep a list of which sequences were matches for later
-                doNotReset[callbacks[i].seq] = 1;
-                _fireCallback(callbacks[i].callback, e, callbacks[i].combo, callbacks[i].seq);
+                doNotReset[eCallbacks[j].seq] = 1;
+                fireCallback(eCallbacks[j].callback, e, eCallbacks[j].combo, eCallbacks[j].seq);
                 continue;
             }
 
             // if there were no sequence matches but we are still here
             // that means this is a regular match so we should fire that
             if (!processedSequenceCallback) {
-                _fireCallback(callbacks[i].callback, e, callbacks[i].combo);
+                fireCallback(eCallbacks[j].callback, e, eCallbacks[j].combo);
             }
         }
 
@@ -530,17 +531,17 @@
         // "b" key will trigger a "keypress" and a "keydown"
         //
         // the "keydown" is expected when there is a modifier, but the
-        // "keypress" ends up matching the _nextExpectedAction since it occurs
+        // "keypress" ends up matching the nextExpectedAction since it occurs
         // after and that causes the sequence to reset
         //
         // we ignore keypresses in a sequence that directly follow a keydown
         // for the same character
-        var ignoreThisKeypress = e.type == 'keypress' && _ignoreNextKeypress;
-        if (e.type == _nextExpectedAction && !_isModifier(character) && !ignoreThisKeypress) {
-            _resetSequences(doNotReset);
+        var ignoreThisKeypress = e.type === "keypress" && ignoreNextKeypress;
+        if (e.type === nextExpectedAction && !isModifier(character) && !ignoreThisKeypress) {
+            resetSequences(doNotReset);
         }
 
-        _ignoreNextKeypress = processedSequenceCallback && e.type == 'keydown';
+        ignoreNextKeypress = processedSequenceCallback && e.type === "keydown";
     }
 
     /**
@@ -549,15 +550,15 @@
      * @param {Event} e
      * @returns void
      */
-    function _handleKeyEvent(e) {
+    function handleKeyEvent(e) {
 
         // normalize e.which for key events
         // @see http://stackoverflow.com/questions/4285627/javascript-keycode-vs-charcode-utter-confusion
-        if (typeof e.which !== 'number') {
+        if (typeof e.which !== "number") {
             e.which = e.keyCode;
         }
 
-        var character = _characterFromEvent(e);
+        var character = characterFromEvent(e);
 
         // no character found then stop
         if (!character) {
@@ -565,12 +566,12 @@
         }
 
         // need to use === for the character check because the character can be 0
-        if (e.type == 'keyup' && _ignoreNextKeyup === character) {
-            _ignoreNextKeyup = false;
+        if (e.type === "keyup" && ignoreNextKeyup === character) {
+            ignoreNextKeyup = false;
             return;
         }
 
-        Combokeys.handleKey(character, _eventModifiers(e), e);
+        Combokeys.handleKey(character, eventModifiers(e), e);
     }
 
     /**
@@ -579,8 +580,8 @@
      * @param {string} key
      * @returns {boolean}
      */
-    function _isModifier(key) {
-        return key == 'shift' || key == 'ctrl' || key == 'alt' || key == 'meta';
+    function isModifier(key) {
+        return key === "shift" || key === "ctrl" || key === "alt" || key === "meta";
     }
 
     /**
@@ -591,9 +592,9 @@
      *
      * @returns void
      */
-    function _resetSequenceTimer() {
-        clearTimeout(_resetTimer);
-        _resetTimer = setTimeout(_resetSequences, 1000);
+    function resetSequenceTimer() {
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(resetSequences, 1000);
     }
 
     /**
@@ -602,10 +603,10 @@
      *
      * @return {Object}
      */
-    function _getReverseMap() {
-        if (!_REVERSE_MAP) {
-            _REVERSE_MAP = {};
-            for (var key in _MAP) {
+    function getReverseMap() {
+        if (!REVERSE_MAP) {
+            REVERSE_MAP = {};
+            for (var key in MAP) {
 
                 // pull out the numeric keypad from here cause keypress should
                 // be able to detect the keys from the character
@@ -613,12 +614,12 @@
                     continue;
                 }
 
-                if (_MAP.hasOwnProperty(key)) {
-                    _REVERSE_MAP[_MAP[key]] = key;
+                if (MAP.hasOwnProperty(key)) {
+                    REVERSE_MAP[MAP[key]] = key;
                 }
             }
         }
-        return _REVERSE_MAP;
+        return REVERSE_MAP;
     }
 
     /**
@@ -628,18 +629,18 @@
      * @param {Array} modifiers
      * @param {string=} action passed in
      */
-    function _pickBestAction(key, modifiers, action) {
+    function pickBestAction(key, modifiers, action) {
 
         // if no action was picked in we should try to pick the one
         // that we think would work best for this key
         if (!action) {
-            action = _getReverseMap()[key] ? 'keydown' : 'keypress';
+            action = getReverseMap()[key] ? "keydown" : "keypress";
         }
 
         // modifier keys don't work as expected with keypress,
         // switch to keydown
-        if (action == 'keypress' && modifiers.length) {
-            action = 'keydown';
+        if (action === "keypress" && modifiers.length) {
+            action = "keydown";
         }
 
         return action;
@@ -654,11 +655,11 @@
      * @param {string=} action
      * @returns void
      */
-    function _bindSequence(combo, keys, callback, action) {
+    function bindSequence(combo, keys, callback, action) {
 
         // start off by adding a sequence level record for this combination
         // and setting the level to 0
-        _sequenceLevels[combo] = 0;
+        sequenceLevels[combo] = 0;
 
         /**
          * callback to increase the sequence level for this sequence and reset
@@ -667,11 +668,11 @@
          * @param {string} nextAction
          * @returns {Function}
          */
-        function _increaseSequence(nextAction) {
+        function increaseSequence(nextAction) {
             return function() {
-                _nextExpectedAction = nextAction;
-                ++_sequenceLevels[combo];
-                _resetSequenceTimer();
+                nextExpectedAction = nextAction;
+                ++sequenceLevels[combo];
+                resetSequenceTimer();
             };
         }
 
@@ -682,19 +683,19 @@
          * @param {Event} e
          * @returns void
          */
-        function _callbackAndReset(e) {
-            _fireCallback(callback, e, combo);
+        function callbackAndReset(e) {
+            fireCallback(callback, e, combo);
 
             // we should ignore the next key up if the action is key down
             // or keypress.  this is so if you finish a sequence and
             // release the key the final key will not trigger a keyup
-            if (action !== 'keyup') {
-                _ignoreNextKeyup = _characterFromEvent(e);
+            if (action !== "keyup") {
+                ignoreNextKeyup = characterFromEvent(e);
             }
 
             // weird race condition if a sequence ends with the key
             // another sequence begins with
-            setTimeout(_resetSequences, 10);
+            setTimeout(resetSequences, 10);
         }
 
         // loop through keys one at a time and bind the appropriate callback
@@ -706,10 +707,10 @@
         // next key in the sequence should match.  this allows a sequence
         // to mix and match keypress and keydown events depending on which
         // ones are better suited to the key provided
-        for (var i = 0; i < keys.length; ++i) {
-            var isFinal = i + 1 === keys.length;
-            var wrappedCallback = isFinal ? _callbackAndReset : _increaseSequence(action || _getKeyInfo(keys[i + 1]).action);
-            _bindSingle(keys[i], wrappedCallback, action, combo, i);
+        for (var j = 0; j < keys.length; ++j) {
+            var isFinal = j + 1 === keys.length;
+            var wrappedCallback = isFinal ? callbackAndReset : increaseSequence(action || getKeyInfo(keys[j + 1]).action);
+            bindSingle(keys[j], wrappedCallback, action, combo, j);
         }
     }
 
@@ -719,12 +720,12 @@
      * @param  {string} combination like "command+shift+l"
      * @return {Array}
      */
-    function _keysFromString(combination) {
-        if (combination === '+') {
-            return ['+'];
+    function keysFromString(combination) {
+        if (combination === "+") {
+            return ["+"];
         }
 
-        return combination.split('+');
+        return combination.split("+");
     }
 
     /**
@@ -734,41 +735,41 @@
      * @param  {string=} action
      * @returns {Object}
      */
-    function _getKeyInfo(combination, action) {
+    function getKeyInfo(combination, action) {
         var keys,
             key,
-            i,
+            j,
             modifiers = [];
 
         // take the keys from this pattern and figure out what the actual
         // pattern is all about
-        keys = _keysFromString(combination);
+        keys = keysFromString(combination);
 
-        for (i = 0; i < keys.length; ++i) {
+        for (j = 0; j < keys.length; ++j) {
             key = keys[i];
 
             // normalize key names
-            if (_SPECIAL_ALIASES[key]) {
-                key = _SPECIAL_ALIASES[key];
+            if (SPECIAL_ALIASES[key]) {
+                key = SPECIAL_ALIASES[key];
             }
 
             // if this is not a keypress event then we should
             // be smart about using shift keys
             // this will only work for US keyboards however
-            if (action && action != 'keypress' && _SHIFT_MAP[key]) {
-                key = _SHIFT_MAP[key];
-                modifiers.push('shift');
+            if (action && action !== "keypress" && SHIFT_MAP[key]) {
+                key = SHIFT_MAP[key];
+                modifiers.push("shift");
             }
 
             // if this key is a modifier then add it to the list of modifiers
-            if (_isModifier(key)) {
+            if (isModifier(key)) {
                 modifiers.push(key);
             }
         }
 
         // depending on what the key combination is
         // we will try to pick the best event for it
-        action = _pickBestAction(key, modifiers, action);
+        action = pickBestAction(key, modifiers, action);
 
         return {
             key: key,
@@ -787,32 +788,32 @@
      * @param {number=} level - what part of the sequence the command is
      * @returns void
      */
-    function _bindSingle(combination, callback, action, sequenceName, level) {
+    function bindSingle(combination, callback, action, sequenceName, level) {
 
         // store a direct mapped reference for use with Combokeys.trigger
-        _directMap[combination + ':' + action] = callback;
+        directMap[combination + ":" + action] = callback;
 
         // make sure multiple spaces in a row become a single space
-        combination = combination.replace(/\s+/g, ' ');
+        combination = combination.replace(/\s+/g, " ");
 
-        var sequence = combination.split(' '),
+        var sequence = combination.split(" "),
             info;
 
         // if this pattern is a sequence of keys then run through this method
         // to reprocess each pattern one key at a time
         if (sequence.length > 1) {
-            _bindSequence(combination, sequence, callback, action);
+            bindSequence(combination, sequence, callback, action);
             return;
         }
 
-        info = _getKeyInfo(combination, action);
+        info = getKeyInfo(combination, action);
 
         // make sure to initialize array if this is the first time
         // a callback is added for this key
-        _callbacks[info.key] = _callbacks[info.key] || [];
+        callbacks[info.key] = callbacks[info.key] || [];
 
         // remove an existing match if there is one
-        _getMatches(info.key, info.modifiers, {type: info.action}, sequenceName, combination, level);
+        getMatches(info.key, info.modifiers, {type: info.action}, sequenceName, combination, level);
 
         // add this call back to the array
         // if it is a sequence put it at the beginning
@@ -820,7 +821,7 @@
         //
         // this is important because the way these are processed expects
         // the sequence ones to come first
-        _callbacks[info.key][sequenceName ? 'unshift' : 'push']({
+        callbacks[info.key][sequenceName ? "unshift" : "push"]({
             callback: callback,
             modifiers: info.modifiers,
             action: info.action,
@@ -838,16 +839,16 @@
      * @param {string|undefined} action
      * @returns void
      */
-    function _bindMultiple(combinations, callback, action) {
-        for (var i = 0; i < combinations.length; ++i) {
-            _bindSingle(combinations[i], callback, action);
+    function bindMultiple(combinations, callback, action) {
+        for (var j = 0; j < combinations.length; ++j) {
+            bindSingle(combinations[j], callback, action);
         }
     }
 
     // start!
-    _addEvent(document, 'keypress', _handleKeyEvent);
-    _addEvent(document, 'keydown', _handleKeyEvent);
-    _addEvent(document, 'keyup', _handleKeyEvent);
+    addEvent(document, "keypress", handleKeyEvent);
+    addEvent(document, "keydown", handleKeyEvent);
+    addEvent(document, "keyup", handleKeyEvent);
 
     var Combokeys = {
 
@@ -862,12 +863,12 @@
          *
          * @param {string|Array} keys
          * @param {Function} callback
-         * @param {string=} action - 'keypress', 'keydown', or 'keyup'
+         * @param {string=} action - "keypress", "keydown", or "keyup"
          * @returns void
          */
         bind: function(keys, callback, action) {
             keys = keys instanceof Array ? keys : [keys];
-            _bindMultiple(keys, callback, action);
+            bindMultiple(keys, callback, action);
             return this;
         },
 
@@ -876,9 +877,9 @@
          *
          * the unbinding sets the callback function of the specified key combo
          * to an empty function and deletes the corresponding key in the
-         * _directMap dict.
+         * directMap dict.
          *
-         * TODO: actually remove this from the _callbacks dictionary instead
+         * TODO: actually remove this from the callbacks dictionary instead
          * of binding an empty function
          *
          * the keycombo+action has to be exactly the same as
@@ -900,8 +901,8 @@
          * @returns void
          */
         trigger: function(keys, action) {
-            if (_directMap[keys + ':' + action]) {
-                _directMap[keys + ':' + action]({}, keys);
+            if (directMap[keys + ":" + action]) {
+                directMap[keys + ":" + action]({}, keys);
             }
             return this;
         },
@@ -914,8 +915,8 @@
          * @returns void
          */
         reset: function() {
-            _callbacks = {};
-            _directMap = {};
+            callbacks = {};
+            directMap = {};
             return this;
         },
 
@@ -929,25 +930,25 @@
         stopCallback: function(e, element) {
 
             // if the element has the class "combokeys" then no need to stop
-            if ((' ' + element.className + ' ').indexOf(' combokeys ') > -1) {
+            if ((" " + element.className + " ").indexOf(" combokeys ") > -1) {
                 return false;
             }
 
             // stop for input, select, and textarea
-            return element.tagName == 'INPUT' || element.tagName == 'SELECT' || element.tagName == 'TEXTAREA' || element.isContentEditable;
+            return element.tagName === "INPUT" || element.tagName === "SELECT" || element.tagName === "TEXTAREA" || element.isContentEditable;
         },
 
         /**
-         * exposes _handleKey publicly so it can be overwritten by extensions
+         * exposes handleKey publicly so it can be overwritten by extensions
          */
-        handleKey: _handleKey
+        handleKey: handleKey
     };
 
     // expose Combokeys to the global object
     window.Combokeys = Combokeys;
 
     // expose Combokeys as an AMD module
-    if (typeof define === 'function' && define.amd) {
+    if (typeof define === "function" && define.amd) {
         define(Combokeys);
     }
-}) (window, document);
+})(window, document);

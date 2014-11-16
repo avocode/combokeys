@@ -1,29 +1,31 @@
+/* eslint-env node, browser */
 /**
  * This extension allows you to record a sequence using Combokeys.
  *
  * @author Dan Tao <daniel.tao@gmail.com>
  */
 (function(Combokeys) {
+    "use strict";
     /**
      * the sequence currently being recorded
      *
      * @type {Array}
      */
-    var _recordedSequence = [],
+    var recordedSequence = [],
 
         /**
          * a callback to invoke after recording a sequence
          *
          * @type {Function|null}
          */
-        _recordedSequenceCallback = null,
+        recordedSequenceCallback = null,
 
         /**
          * a list of all of the keys currently held down
          *
          * @type {Array}
          */
-        _currentRecordedKeys = [],
+        currentRecordedKeys = [],
 
         /**
          * temporary state where we remember if we've already captured a
@@ -31,14 +33,14 @@
          *
          * @type {boolean}
          */
-        _recordedCharacterKey = false,
+        recordedCharacterKey = false,
 
         /**
          * a handle for the timer of the current recording
          *
          * @type {null|number}
          */
-        _recordTimer = null,
+        recordTimer = null,
 
         /**
          * the original handleKey method to override when Combokeys.record() is
@@ -46,7 +48,7 @@
          *
          * @type {Function}
          */
-        _origHandleKey = Combokeys.handleKey;
+        origHandleKey = Combokeys.handleKey;
 
     /**
      * handles a character key event
@@ -56,22 +58,23 @@
      * @param {Event} e
      * @returns void
      */
-    function _handleKey(character, modifiers, e) {
+    function handleKey(character, modifiers, e) {
+        var i;
         // remember this character if we're currently recording a sequence
-        if (e.type == 'keydown') {
-            if (character.length === 1 && _recordedCharacterKey) {
-                _recordCurrentCombo();
+        if (e.type === "keydown") {
+            if (character.length === 1 && recordedCharacterKey) {
+                recordCurrentCombo();
             }
 
             for (i = 0; i < modifiers.length; ++i) {
-                _recordKey(modifiers[i]);
+                recordKey(modifiers[i]);
             }
-            _recordKey(character);
+            recordKey(character);
 
         // once a key is released, all keys that were held down at the time
         // count as a keypress
-        } else if (e.type == 'keyup' && _currentRecordedKeys.length > 0) {
-            _recordCurrentCombo();
+        } else if (e.type === "keyup" && currentRecordedKeys.length > 0) {
+            recordCurrentCombo();
         }
     }
 
@@ -81,20 +84,20 @@
      * @param {string} key
      * @returns void
      */
-    function _recordKey(key) {
+    function recordKey(key) {
         var i;
 
         // one-off implementation of Array.indexOf, since IE6-9 don't support it
-        for (i = 0; i < _currentRecordedKeys.length; ++i) {
-            if (_currentRecordedKeys[i] === key) {
+        for (i = 0; i < currentRecordedKeys.length; ++i) {
+            if (currentRecordedKeys[i] === key) {
                 return;
             }
         }
 
-        _currentRecordedKeys.push(key);
+        currentRecordedKeys.push(key);
 
         if (key.length === 1) {
-            _recordedCharacterKey = true;
+            recordedCharacterKey = true;
         }
     }
 
@@ -104,23 +107,23 @@
      *
      * @returns void
      */
-    function _recordCurrentCombo() {
-        _recordedSequence.push(_currentRecordedKeys);
-        _currentRecordedKeys = [];
-        _recordedCharacterKey = false;
-        _restartRecordTimer();
+    function recordCurrentCombo() {
+        recordedSequence.push(currentRecordedKeys);
+        currentRecordedKeys = [];
+        recordedCharacterKey = false;
+        restartRecordTimer();
     }
 
     /**
      * ensures each combo in a sequence is in a predictable order and formats
-     * key combos to be '+'-delimited
+     * key combos to be "+"-delimited
      *
      * modifies the sequence in-place
      *
      * @param {Array} sequence
      * @returns void
      */
-    function _normalizeSequence(sequence) {
+    function normalizeSequence(sequence) {
         var i;
 
         for (i = 0; i < sequence.length; ++i) {
@@ -137,7 +140,7 @@
                 return x > y ? 1 : -1;
             });
 
-            sequence[i] = sequence[i].join('+');
+            sequence[i] = sequence[i].join("+");
         }
     }
 
@@ -147,18 +150,18 @@
      *
      * @returns void
      */
-    function _finishRecording() {
-        if (_recordedSequenceCallback) {
-            _normalizeSequence(_recordedSequence);
-            _recordedSequenceCallback(_recordedSequence);
+    function finishRecording() {
+        if (recordedSequenceCallback) {
+            normalizeSequence(recordedSequence);
+            recordedSequenceCallback(recordedSequence);
         }
 
         // reset all recorded state
-        _recordedSequence = [];
-        _recordedSequenceCallback = null;
-        _currentRecordedKeys = [];
+        recordedSequence = [];
+        recordedSequenceCallback = null;
+        currentRecordedKeys = [];
 
-        Combokeys.handleKey = _origHandleKey;
+        Combokeys.handleKey = origHandleKey;
     }
 
     /**
@@ -169,9 +172,9 @@
      *
      * @returns void
      */
-    function _restartRecordTimer() {
-        clearTimeout(_recordTimer);
-        _recordTimer = setTimeout(_finishRecording, 1000);
+    function restartRecordTimer() {
+        clearTimeout(recordTimer);
+        recordTimer = setTimeout(finishRecording, 1000);
     }
 
     /**
@@ -182,8 +185,8 @@
      * @returns void
      */
     Combokeys.record = function(callback) {
-        Combokeys.handleKey = _handleKey;
-        _recordedSequenceCallback = callback;
+        Combokeys.handleKey = handleKey;
+        recordedSequenceCallback = callback;
     };
 
 })(Combokeys);

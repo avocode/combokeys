@@ -1,42 +1,47 @@
+/* eslint-env node, browser */
+/* global
+    $
+*/
 /**
  * Peanut butter goes great with jelly.
  *
  * @author Dan Tao <daniel.tao@gmail.com>
  */
 var Jelly = (function() {
+    "use strict";
     var recordButton = $("button.test-record"),
         recordResult = $("div.test-record-result");
 
-    function _formatSequenceAsHtml(sequence) {
+    function formatSequenceAsHtml(sequence) {
         var combos = [],
             i;
 
         for (i = 0; i < sequence.length; ++i) {
-            combos.push('<span>' + _formatKeysAsHtml(sequence[i].split('+')) + '</span>');
+            combos.push("<span>" + formatKeysAsHtml(sequence[i].split("+")) + "</span>");
         }
 
-        return combos.join(' ');
+        return combos.join(" ");
     }
 
-    function _formatKeysAsHtml(keys) {
+    function formatKeysAsHtml(keys) {
         var htmlKeys = [],
             i;
 
         for (i = 0; i < keys.length; ++i) {
-            htmlKeys.push('<kbd>' + keys[i] + '</kbd>');
+            htmlKeys.push("<kbd>" + keys[i] + "</kbd>");
         }
 
-        return htmlKeys.join('+');
+        return htmlKeys.join("+");
     }
 
-    function _prepareRecordTest() {
-        recordButton.prop('disabled', true);
-        recordButton.text('Recording');
+    function prepareRecordTest() {
+        recordButton.prop("disabled", true);
+        recordButton.text("Recording");
 
         Combokeys.record(function(sequence) {
-            recordResult.html(_formatSequenceAsHtml(sequence));
-            recordButton.prop('disabled', false);
-            recordButton.text('Record');
+            recordResult.html(formatSequenceAsHtml(sequence));
+            recordButton.prop("disabled", false);
+            recordButton.text("Record");
         });
 
         // take focus away from the button so that Combokeys will actually
@@ -46,7 +51,7 @@ var Jelly = (function() {
 
     return {
         spread: function() {
-            recordButton.click(_prepareRecordTest);
+            recordButton.click(prepareRecordTest);
         }
     };
 
