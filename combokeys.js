@@ -365,7 +365,7 @@
                 var deleteCombo = !sequenceName && callback.combo === combination;
                 var deleteSequence = sequenceName && callback.seq === sequenceName && callback.level === level;
                 if (deleteCombo || deleteSequence) {
-                    callbacks[character].splice(i, 1);
+                    callbacks[character].splice(j, 1);
                 }
 
                 matches.push(callback);
