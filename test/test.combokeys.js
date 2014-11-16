@@ -1,5 +1,8 @@
 /* eslint-env node, browser, mocha */
 /* eslint no-unused-expressions:0 */
+/* global
+    Event
+*/
 var expect = require("chai").expect;
 var sinon = require("sinon");
 var Combokeys = require("../combokeys");
