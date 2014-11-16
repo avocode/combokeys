@@ -11,7 +11,8 @@ module.exports = function(grunt) {
             target: [
                 "Gruntfile.js",
                 "combokeys.js",
-                "plugins/**/*.js"
+                "plugins/**/*.js",
+                "test/test.*.js"
             ]
         },
 
