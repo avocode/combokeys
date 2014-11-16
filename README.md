@@ -6,7 +6,7 @@ It is licensed under the Apache 2.0 license.
 
 It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no external dependencies, and has been tested in the following browsers:
 
-- Internet Explorer 6+
+- Internet Explorer 6+ (test suite works in IE9+)
 - Safari
 - Firefox
 - Chrome
@@ -20,11 +20,6 @@ This project was forked from [ccampbell/mousetrap](https://github.com/ccampbell/
 It was forked because pull–requests were not being reviewed.
 
 This fork's author intends to review pull–requests.
-
-Changes since forking include:
-
-1. Rebranding
-1. Removal of minifications
 
 ## Getting started
 
@@ -78,39 +73,6 @@ There are a number of other similar libraries out there so what makes this one d
 - You can programatically trigger key events with the ``trigger()`` method
 - It works with the numeric keypad on your keyboard
 - The code is well documented/commented
-
-## Tests
-
-Unit tests run via <a href="http://visionmedia.github.io/mocha" target="_blank">mocha</a>.
-
-### Running in browser
-
-Download the repo and go to `tests/index.html` in your browser.
-
-### Running with Grunt and PhantomJS
-
-1.  Install grunt-cli
-
-    ```bash
-    npm install -g grunt-cli
-    ```
-
-2.  Install npm packages
-
-    ```bash
-    cd /path/to/repo
-    npm install
-    ```
-
-3.  Run tests
-
-    ```bash
-    grunt mocha
-    ```
-
-## Documentation
-
-Full documentation can be found at http://craig.is/killing/mice
 
 ## Plugins
 
