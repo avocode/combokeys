@@ -1,12 +1,12 @@
 # Combokeys
 
-Combokeys is a simple library for handling keyboard shortcuts in Javascript.
+Combokeys is a JavaScript library for handling keyboard shortcuts in the browser.
 
 It is licensed under the Apache 2.0 license.
 
 It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no external dependencies, and has been tested in the following browsers:
 
-- Internet Explorer 6+
+- Internet Explorer 6+ (test suite works in IE9+)
 - Safari
 - Firefox
 - Chrome
@@ -21,56 +21,67 @@ It was forked because pull–requests were not being reviewed.
 
 This fork's author intends to review pull–requests.
 
-Changes since forking include:
+Main changes are
 
-1. Rebranding
-1. Removal of minifications
+1. Refactored as CommonJS
+2. Doesn't automatically listen on the `document`. Instead, it is now a constructor and the element on which to listen must be provided on instantiation. Multiple instances possible.
 
 ## Getting started
 
-1.  Include Combokeys on your page before the closing ``</body>`` tag
+Get it on your page:
 
-    ```html
-    <script src="/path/to/combokeys.min.js"></script>
-    ```
+```
+var Combokeys;
+Combokeys = require("combokeys");
+```
 
-2.  Add some keyboard events to listen for
+Instantiate it for the entire page:
 
-    ```html
-    <script>
-        // single keys
-        Combokeys.bind('4', function() { console.log('4'); });
-        Combokeys.bind("?", function() { console.log('show shortcuts!'); });
-        Combokeys.bind('esc', function() { console.log('escape'); }, 'keyup');
+```
+var combokeys = new Combokeys(document);
+```
 
-        // combinations
-        Combokeys.bind('command+shift+k', function() { console.log('command shift k'); });
+Or, instantiate it for one or more specific elements:
 
-        // map multiple combinations to the same callback
-        Combokeys.bind(['command+k', 'ctrl+k'], function() {
-            console.log('command k or control k');
+```
+var firstCombokeys = new Combokeys(document.getElementById("first"));
+var secondCombokeys = new Combokeys(document.getElementById("second"));
+```
 
-            // return false to prevent default browser behavior
-            // and stop event from bubbling
-            return false;
-        });
+Add some combos!
 
-        // gmail style sequences
-        Combokeys.bind('g i', function() { console.log('go to inbox'); });
-        Combokeys.bind('* a', function() { console.log('select all'); });
+```
+// single keys
+combokeys.bind('4', function() { console.log('4'); });
+firstCombokeys.bind("?", function() { console.log('show shortcuts!'); });
+secondCombokeys.bind('esc', function() { console.log('escape'); }, 'keyup');
 
-        // konami code!
-        Combokeys.bind('up up down down left right left right b a enter', function() {
-            console.log('konami code');
-        });
-    </script>
-    ```
+// combinations
+combokeys.bind('command+shift+k', function() { console.log('command shift k'); });
+
+// map multiple combinations to the same callback
+combokeys.bind(['command+k', 'ctrl+k'], function() {
+    console.log('command k or control k');
+    // return false to prevent default browser behavior
+    // and stop event from bubbling
+    return false;
+});
+
+// gmail style sequences
+Combokeys.bind('g i', function() { console.log('go to inbox'); });
+Combokeys.bind('* a', function() { console.log('select all'); });
+
+// konami code!
+Combokeys.bind('up up down down left right left right b a enter', function() {
+    console.log('konami code');
+});
+```
 
 ## Why Combokeys?
 
 There are a number of other similar libraries out there so what makes this one different?
 
-- There are no external dependencies, no framework is required
+- CommonJS, NPM (package for this fork not yet published).
 - You are not limited to ``keydown`` events (You can specify ``keypress``, ``keydown``, or ``keyup`` or let Combokeys choose for you).
 - You can bind key events directly to special keys such as ``?`` or ``*`` without having to specify ``shift+/`` or ``shift+8`` which are not consistent across all keyboards
 - It works with international keyboard layouts
@@ -79,44 +90,11 @@ There are a number of other similar libraries out there so what makes this one d
 - It works with the numeric keypad on your keyboard
 - The code is well documented/commented
 
-## Tests
-
-Unit tests run via <a href="http://visionmedia.github.io/mocha" target="_blank">mocha</a>.
-
-### Running in browser
-
-Download the repo and go to `tests/index.html` in your browser.
-
-### Running with Grunt and PhantomJS
-
-1.  Install grunt-cli
-
-    ```bash
-    npm install -g grunt-cli
-    ```
-
-2.  Install npm packages
-
-    ```bash
-    cd /path/to/repo
-    npm install
-    ```
-
-3.  Run tests
-
-    ```bash
-    grunt mocha
-    ```
-
-## Documentation
-
-Full documentation can be found at http://craig.is/killing/mice
-
 ## Plugins
 
 Since this project was forked from
 [ccampbell/mousetrap](https://github.com/ccampbell/mousetrap)
-and was converted to CommonJS, the plugins were not converted to CommonJS.
+and was converted to CommonJS, the plugins were not converted to CommonJS, so they don't work yet.
 
 ### Bind dictionary
 
