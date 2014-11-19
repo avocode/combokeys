@@ -81,7 +81,7 @@ Combokeys.bind('up up down down left right left right b a enter', function() {
 
 There are a number of other similar libraries out there so what makes this one different?
 
-- CommonJS, NPM (package for this fork not yet published).
+- CommonJS, [NPM](https://www.npmjs.org/package/combokeys).
 - You are not limited to ``keydown`` events (You can specify ``keypress``, ``keydown``, or ``keyup`` or let Combokeys choose for you).
 - You can bind key events directly to special keys such as ``?`` or ``*`` without having to specify ``shift+/`` or ``shift+8`` which are not consistent across all keyboards
 - It works with international keyboard layouts
