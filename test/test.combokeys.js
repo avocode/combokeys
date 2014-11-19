@@ -1,5 +1,6 @@
 /* eslint-env node, browser, mocha */
 /* eslint no-unused-expressions:0 */
+"use strict";
 /* global
     Event
 */
@@ -7,21 +8,40 @@ require("es5-shim/es5-shim");
 require("es5-shim/es5-sham");
 var expect = require("chai").expect;
 var sinon = require("sinon");
-var Combokeys = require("../combokeys");
-var KeyEvent = require("./libs/key-event");
+var Combokeys = require("..");
+var KeyEvent = require("./lib/key-event");
 
 afterEach(function() {
-    "use strict";
     Combokeys.reset();
 });
 
-describe("Combokeys.bind", function() {
-    "use strict";
+describe("initialization", function() {
+    it("initializes on the document", function() {
+        var combokeys = new Combokeys(document);
+        expect(combokeys).to.be.an.instanceOf(Combokeys);
+        expect(combokeys.element).to.equal(document);
+    });
+    it("can initialize multipe instances", function() {
+        var first = document.createElement("div");
+        var second = document.createElement("div");
+
+        var firstCombokeys = new Combokeys(first);
+        var secondCombokeys = new Combokeys(second);
+
+        expect(secondCombokeys).to.be.an.instanceOf(Combokeys);
+        expect(firstCombokeys).to.not.equal(secondCombokeys);
+        expect(firstCombokeys.element).to.equal(first);
+        expect(secondCombokeys.element).to.equal(second);
+    });
+});
+
+describe("combokeys.bind", function() {
     describe("basic", function() {
         it("z key fires when pressing z", function() {
             var spy = sinon.spy();
 
-            Combokeys.bind("z", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("z", spy);
 
             KeyEvent.simulate("Z".charCodeAt(0), 90);
 
@@ -35,7 +55,8 @@ describe("Combokeys.bind", function() {
         it("z key fires from keydown", function() {
             var spy = sinon.spy();
 
-            Combokeys.bind("z", spy, "keydown");
+            var combokeys = new Combokeys(document);
+            combokeys.bind("z", spy, "keydown");
 
             KeyEvent.simulate("Z".charCodeAt(0), 90);
 
@@ -49,7 +70,8 @@ describe("Combokeys.bind", function() {
         it("z key does not fire when pressing b", function() {
             var spy = sinon.spy();
 
-            Combokeys.bind("z", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("z", spy);
 
             KeyEvent.simulate("B".charCodeAt(0), 66);
 
@@ -57,12 +79,13 @@ describe("Combokeys.bind", function() {
         });
 
         it("z key does not fire when holding a modifier key", function() {
-            var spy = sinon.spy();
-            var modifiers = ["ctrl", "alt", "meta", "shift"];
-            var charCode;
-            var modifier;
+            var spy = sinon.spy(),
+                modifiers = ["ctrl", "alt", "meta", "shift"],
+                charCode,
+                modifier;
 
-            Combokeys.bind("z", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("z", spy);
 
             for (var i = 0; i < 4; i++) {
                 modifier = modifiers[i];
@@ -84,7 +107,8 @@ describe("Combokeys.bind", function() {
         it("keyup events should fire", function() {
             var spy = sinon.spy();
 
-            Combokeys.bind("z", spy, "keyup");
+            var combokeys = new Combokeys(document);
+            combokeys.bind("z", spy, "keyup");
 
             KeyEvent.simulate("Z".charCodeAt(0), 90);
 
@@ -98,7 +122,8 @@ describe("Combokeys.bind", function() {
         it("keyup event for 0 should fire", function() {
             var spy = sinon.spy();
 
-            Combokeys.bind("0", spy, "keyup");
+            var combokeys = new Combokeys(document);
+            combokeys.bind("0", spy, "keyup");
 
             KeyEvent.simulate(0, 48);
 
@@ -106,10 +131,12 @@ describe("Combokeys.bind", function() {
         });
 
         it("rebinding a key overwrites the callback for that key", function() {
-            var spy1 = sinon.spy();
-            var spy2 = sinon.spy();
-            Combokeys.bind("x", spy1);
-            Combokeys.bind("x", spy2);
+            var spy1 = sinon.spy(),
+                spy2 = sinon.spy();
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("x", spy1);
+            combokeys.bind("x", spy2);
 
             KeyEvent.simulate("X".charCodeAt(0), 88);
 
@@ -119,7 +146,9 @@ describe("Combokeys.bind", function() {
 
         it("binding an array of keys", function() {
             var spy = sinon.spy();
-            Combokeys.bind(["a", "b", "c"], spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind(["a", "b", "c"], spy);
 
             KeyEvent.simulate("A".charCodeAt(0), 65);
             expect(spy.callCount).to.equal(1, "new callback was called");
@@ -139,7 +168,8 @@ describe("Combokeys.bind", function() {
                 return false;
             });
 
-            Combokeys.bind("command+s", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("command+s", spy);
 
             KeyEvent.simulate("S".charCodeAt(0), 83, ["meta"]);
 
@@ -150,7 +180,7 @@ describe("Combokeys.bind", function() {
 
             // try without return false
             spy = sinon.spy();
-            Combokeys.bind("command+s", spy);
+            combokeys.bind("command+s", spy);
             KeyEvent.simulate("S".charCodeAt(0), 83, ["meta"]);
 
             expect(spy.callCount).to.equal(1, "callback should fire");
@@ -161,7 +191,9 @@ describe("Combokeys.bind", function() {
 
         it("capslock key is ignored", function() {
             var spy = sinon.spy();
-            Combokeys.bind("a", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("a", spy);
 
             KeyEvent.simulate("a".charCodeAt(0), 65);
             expect(spy.callCount).to.equal(1, "callback should fire for lowercase a");
@@ -179,7 +211,9 @@ describe("Combokeys.bind", function() {
     describe("special characters", function() {
         it("binding special characters", function() {
             var spy = sinon.spy();
-            Combokeys.bind("*", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("*", spy);
 
             KeyEvent.simulate("*".charCodeAt(0), 56, ["shift"]);
 
@@ -189,7 +223,9 @@ describe("Combokeys.bind", function() {
 
         it("binding special characters keyup", function() {
             var spy = sinon.spy();
-            Combokeys.bind("*", spy, "keyup");
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("*", spy, "keyup");
 
             KeyEvent.simulate("*".charCodeAt(0), 56, ["shift"]);
 
@@ -199,7 +235,9 @@ describe("Combokeys.bind", function() {
 
         it("binding keys with no associated charCode", function() {
             var spy = sinon.spy();
-            Combokeys.bind("left", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("left", spy);
 
             KeyEvent.simulate(0, 37);
 
@@ -211,7 +249,9 @@ describe("Combokeys.bind", function() {
     describe("combos with modifiers", function() {
         it("binding key combinations", function() {
             var spy = sinon.spy();
-            Combokeys.bind("command+o", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("command+o", spy);
 
             KeyEvent.simulate("O".charCodeAt(0), 79, ["meta"]);
 
@@ -221,7 +261,9 @@ describe("Combokeys.bind", function() {
 
         it("binding key combos with multiple modifiers", function() {
             var spy = sinon.spy();
-            Combokeys.bind("command+shift+o", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("command+shift+o", spy);
             KeyEvent.simulate("O".charCodeAt(0), 79, ["meta"]);
             expect(spy.callCount).to.equal(0, "command+o callback should not fire");
 
@@ -233,7 +275,9 @@ describe("Combokeys.bind", function() {
     describe("sequences", function() {
         it("binding sequences", function() {
             var spy = sinon.spy();
-            Combokeys.bind("g i", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("g i", spy);
 
             KeyEvent.simulate("G".charCodeAt(0), 71);
             expect(spy.callCount).to.equal(0, "callback should not fire");
@@ -244,7 +288,9 @@ describe("Combokeys.bind", function() {
 
         it("binding sequences with mixed types", function() {
             var spy = sinon.spy();
-            Combokeys.bind("g o enter", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("g o enter", spy);
 
             KeyEvent.simulate("G".charCodeAt(0), 71);
             expect(spy.callCount).to.equal(0, "callback should not fire");
@@ -258,19 +304,21 @@ describe("Combokeys.bind", function() {
 
         it("binding sequences starting with modifier keys", function() {
             var spy = sinon.spy();
-            Combokeys.bind("option enter", spy);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("option enter", spy);
             KeyEvent.simulate(0, 18, ["alt"]);
             KeyEvent.simulate(0, 13);
             expect(spy.callCount).to.equal(1, "callback should fire");
 
             spy = sinon.spy();
-            Combokeys.bind("command enter", spy);
+            combokeys.bind("command enter", spy);
             KeyEvent.simulate(0, 91, ["meta"]);
             KeyEvent.simulate(0, 13);
             expect(spy.callCount).to.equal(1, "callback should fire");
 
             spy = sinon.spy();
-            Combokeys.bind("escape enter", spy);
+            combokeys.bind("escape enter", spy);
             KeyEvent.simulate(0, 27);
             KeyEvent.simulate(0, 13);
             expect(spy.callCount).to.equal(1, "callback should fire");
@@ -279,8 +327,10 @@ describe("Combokeys.bind", function() {
         it("key within sequence should not fire", function() {
             var spy1 = sinon.spy();
             var spy2 = sinon.spy();
-            Combokeys.bind("a", spy1);
-            Combokeys.bind("c a t", spy2);
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("a", spy1);
+            combokeys.bind("c a t", spy2);
 
             KeyEvent.simulate("A".charCodeAt(0), 65);
             expect(spy1.callCount).to.equal(1, "callback 1 should fire");
@@ -297,8 +347,9 @@ describe("Combokeys.bind", function() {
             var spy1 = sinon.spy();
             var spy2 = sinon.spy();
 
-            Combokeys.bind("t", spy1, "keyup");
-            Combokeys.bind("b a t", spy2);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("t", spy1, "keyup");
+            combokeys.bind("b a t", spy2);
 
             KeyEvent.simulate("B".charCodeAt(0), 66);
             KeyEvent.simulate("A".charCodeAt(0), 65);
@@ -310,7 +361,8 @@ describe("Combokeys.bind", function() {
 
         it("keyup sequences should work", function() {
             var spy = sinon.spy();
-            Combokeys.bind("b a t", spy, "keyup");
+            var combokeys = new Combokeys(document);
+            combokeys.bind("b a t", spy, "keyup");
 
             KeyEvent.simulate("b".charCodeAt(0), 66);
             KeyEvent.simulate("a".charCodeAt(0), 65);
@@ -323,7 +375,8 @@ describe("Combokeys.bind", function() {
 
         it("extra spaces in sequences should be ignored", function() {
             var spy = sinon.spy();
-            Combokeys.bind("b   a  t", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("b   a  t", spy);
 
             KeyEvent.simulate("b".charCodeAt(0), 66);
             KeyEvent.simulate("a".charCodeAt(0), 65);
@@ -336,8 +389,9 @@ describe("Combokeys.bind", function() {
             var spy1 = sinon.spy();
             var spy2 = sinon.spy();
 
-            Combokeys.bind("ctrl a", spy1);
-            Combokeys.bind("ctrl+b", spy2);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("ctrl a", spy1);
+            combokeys.bind("ctrl+b", spy2);
 
             KeyEvent.simulate(0, 17, ["ctrl"]);
             KeyEvent.simulate("A".charCodeAt(0), 65);
@@ -351,8 +405,9 @@ describe("Combokeys.bind", function() {
             var spy1 = sinon.spy();
             var spy2 = sinon.spy();
 
-            Combokeys.bind("g g l", spy2);
-            Combokeys.bind("g g o", spy1);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("g g l", spy2);
+            combokeys.bind("g g o", spy1);
 
             KeyEvent.simulate("g".charCodeAt(0), 71);
             KeyEvent.simulate("g".charCodeAt(0), 71);
@@ -373,8 +428,9 @@ describe("Combokeys.bind", function() {
             var spy1 = sinon.spy();
             var spy2 = sinon.spy();
 
-            Combokeys.bind("a b c", spy1);
-            Combokeys.bind("b c", spy2);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("a b c", spy1);
+            combokeys.bind("b c", spy2);
 
             KeyEvent.simulate("A".charCodeAt(0), 65);
             KeyEvent.simulate("B".charCodeAt(0), 66);
@@ -385,8 +441,8 @@ describe("Combokeys.bind", function() {
 
             spy1.reset();
             spy2.reset();
-            Combokeys.bind("option b", spy1);
-            Combokeys.bind("a option b", spy2);
+            combokeys.bind("option b", spy1);
+            combokeys.bind("a option b", spy2);
 
             KeyEvent.simulate("A".charCodeAt(0), 65);
             KeyEvent.simulate(0, 18, ["alt"]);
@@ -399,8 +455,9 @@ describe("Combokeys.bind", function() {
         it("rebinding same sequence should override previous", function() {
             var spy1 = sinon.spy();
             var spy2 = sinon.spy();
-            Combokeys.bind("a b c", spy1);
-            Combokeys.bind("a b c", spy2);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("a b c", spy1);
+            combokeys.bind("a b c", spy2);
 
             KeyEvent.simulate("a".charCodeAt(0), 65);
             KeyEvent.simulate("b".charCodeAt(0), 66);
@@ -412,7 +469,8 @@ describe("Combokeys.bind", function() {
 
         it("broken sequences", function() {
             var spy = sinon.spy();
-            Combokeys.bind("h a t", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("h a t", spy);
 
             KeyEvent.simulate("h".charCodeAt(0), 72);
             KeyEvent.simulate("e".charCodeAt(0), 69);
@@ -425,17 +483,18 @@ describe("Combokeys.bind", function() {
 
         it("sequences containing combos should work", function() {
             var spy = sinon.spy();
-            Combokeys.bind("a ctrl+b", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("a ctrl+b", spy);
 
             KeyEvent.simulate("a".charCodeAt(0), 65);
             KeyEvent.simulate("B".charCodeAt(0), 66, ["ctrl"]);
 
             expect(spy.callCount).to.equal(1, "`a ctrl+b` should fire");
 
-            Combokeys.unbind("a ctrl+b");
+            combokeys.unbind("a ctrl+b");
 
             spy = sinon.spy();
-            Combokeys.bind("ctrl+b a", spy);
+            combokeys.bind("ctrl+b a", spy);
 
             KeyEvent.simulate("b".charCodeAt(0), 66, ["ctrl"]);
             KeyEvent.simulate("a".charCodeAt(0), 65);
@@ -445,7 +504,8 @@ describe("Combokeys.bind", function() {
 
         it("sequences starting with spacebar should work", function() {
             var spy = sinon.spy();
-            Combokeys.bind("a space b c", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("a space b c", spy);
 
             KeyEvent.simulate("a".charCodeAt(0), 65);
             KeyEvent.simulate(32, 32);
@@ -457,7 +517,8 @@ describe("Combokeys.bind", function() {
 
         it("konami code", function() {
             var spy = sinon.spy();
-            Combokeys.bind("up up down down left right left right b a enter", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("up up down down left right left right b a enter", spy);
 
             KeyEvent.simulate(0, 38);
             KeyEvent.simulate(0, 38);
@@ -478,7 +539,8 @@ describe("Combokeys.bind", function() {
             var spy = sinon.spy();
             var clock = sinon.useFakeTimers();
 
-            Combokeys.bind("h a t", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("h a t", spy);
 
             KeyEvent.simulate("h".charCodeAt(0), 72);
             clock.tick(600);
@@ -494,7 +556,8 @@ describe("Combokeys.bind", function() {
             var spy = sinon.spy();
             var clock = sinon.useFakeTimers();
 
-            Combokeys.bind("g t", spy);
+            var combokeys = new Combokeys(document);
+            combokeys.bind("g t", spy);
             KeyEvent.simulate("g".charCodeAt(0), 71);
             clock.tick(1000);
             KeyEvent.simulate("t".charCodeAt(0), 84);
@@ -530,7 +593,9 @@ describe("Combokeys.bind", function() {
         function getCallback(key, keyCode, type, modifiers) {
             return function() {
                 var spy = sinon.spy();
-                Combokeys.bind(key, spy);
+
+                var combokeys = new Combokeys(document);
+                combokeys.bind(key, spy);
 
                 KeyEvent.simulate(key.charCodeAt(0), keyCode, modifiers);
                 expect(spy.callCount).to.equal(1);
@@ -549,28 +614,29 @@ describe("Combokeys.bind", function() {
     });
 });
 
-describe("Combokeys.unbind", function() {
-    "use strict";
+describe("combokeys.unbind", function() {
     it("unbind works", function() {
         var spy = sinon.spy();
-        Combokeys.bind("a", spy);
+        var combokeys = new Combokeys(document);
+        combokeys.bind("a", spy);
         KeyEvent.simulate("a".charCodeAt(0), 65);
         expect(spy.callCount).to.equal(1, "callback for a should fire");
 
-        Combokeys.unbind("a");
+        combokeys.unbind("a");
         KeyEvent.simulate("a".charCodeAt(0), 65);
         expect(spy.callCount).to.equal(1, "callback for a should not fire after unbind");
     });
 
     it("unbind accepts an array", function() {
         var spy = sinon.spy();
-        Combokeys.bind(["a", "b", "c"], spy);
+        var combokeys = new Combokeys(document);
+        combokeys.bind(["a", "b", "c"], spy);
         KeyEvent.simulate("a".charCodeAt(0), 65);
         KeyEvent.simulate("b".charCodeAt(0), 66);
         KeyEvent.simulate("c".charCodeAt(0), 67);
         expect(spy.callCount).to.equal(3, "callback should have fired 3 times");
 
-        Combokeys.unbind(["a", "b", "c"]);
+        combokeys.unbind(["a", "b", "c"]);
         KeyEvent.simulate("a".charCodeAt(0), 65);
         KeyEvent.simulate("b".charCodeAt(0), 66);
         KeyEvent.simulate("c".charCodeAt(0), 67);

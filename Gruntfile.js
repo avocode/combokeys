@@ -10,10 +10,10 @@ module.exports = function(grunt) {
         eslint: {
             target: [
                 "Gruntfile.js",
-                "combokeys.js",
+                "index.js",
                 "plugins/**/*.js",
                 "test/**/*.js",
-                "constants/**/*.js"
+                "helpers/**/*.js"
             ]
         },
 

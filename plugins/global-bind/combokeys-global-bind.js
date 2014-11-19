@@ -1,4 +1,5 @@
 /* eslint-env node, browser */
+"use strict";
 /**
  * adds a bindGlobal method to Combokeys that allows you to
  * bind specific keyboard shortcuts that will still work
