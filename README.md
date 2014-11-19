@@ -90,6 +90,12 @@ There are a number of other similar libraries out there so what makes this one d
 - It works with the numeric keypad on your keyboard
 - The code is well documented/commented
 
+## Documentation
+
+The most complete documentation is currently at [Mousetrap, the original project's website](http://craig.is/killing/mice). At the time of this writing, the only differences are in how you get it in your page (It is now a CommonJS module which does not define a global for itself) and that you must instantiate it before binding keys.
+
+The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback` and `.reset`.
+
 ## Plugins
 
 Since this project was forked from
