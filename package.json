@@ -6,6 +6,7 @@
     "homepage": "https://github.com/mightyiam/combokeys",
     "implements": ["CommonJS/Modules/1.0"],
     "scripts": {
+        "build": "mkdir -p dist ; ./node_modules/.bin/browserify index.js -o dist/combokeys.js --standalone Combokeys",
         "test": "./node_modules/zuul/bin/zuul --phantom -- test/test.combokeys.js"
     },
     "repositories": [{
@@ -40,6 +41,7 @@
         "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
     }],
     "devDependencies": {
+        "browserify": "~7.0.3",
         "chai": "^1.10.0",
         "es5-shim": "^4.0.3",
         "grunt": "~0.4.1",
