@@ -9,10 +9,10 @@
         "build": "mkdir -p dist ; ./node_modules/.bin/browserify index.js -o dist/combokeys.js --standalone Combokeys",
         "test": "./node_modules/zuul/bin/zuul --phantom -- test/test.combokeys.js"
     },
-    "repositories": [{
+    "repository": {
         "type": "git",
         "url": "git://github.com/mightyiam/combokeys.git"
-    }],
+    },
     "keywords": [
         "keyboard",
         "shortcuts",
