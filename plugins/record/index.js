@@ -1,11 +1,11 @@
 /* eslint-env node, browser */
+"use strict";
 /**
  * This extension allows you to record a sequence using Combokeys.
  *
  * @author Dan Tao <daniel.tao@gmail.com>
  */
-(function(Combokeys) {
-    "use strict";
+module.exports = function(Combokeys) {
     /**
      * the sequence currently being recorded
      *
@@ -189,4 +189,5 @@
         recordedSequenceCallback = callback;
     };
 
-})(Combokeys);
+    return Combokeys;
+}

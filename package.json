@@ -7,7 +7,7 @@
     "implements": ["CommonJS/Modules/1.0"],
     "scripts": {
         "build": "mkdir -p dist ; ./node_modules/.bin/browserify index.js -o dist/combokeys.js --standalone Combokeys",
-        "test": "./node_modules/zuul/bin/zuul --phantom -- test/test.combokeys.js"
+        "test": "./node_modules/zuul/bin/zuul --phantom -- test/test.combokeys.js test/plugins/test.*.js"
     },
     "repositories": [{
         "type": "git",

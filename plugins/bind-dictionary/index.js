@@ -1,4 +1,5 @@
 /* eslint-env node, browser */
+"use strict";
 /**
  * Overwrites default Combokeys.bind method to optionally accept
  * an object to bind multiple key events in a single call
@@ -14,27 +15,25 @@
  * as a second argument
  *
  */
-Combokeys = (function(Combokeys) {
-    "use strict";
-    var self = Combokeys,
-        oldBind = self.bind,
+module.exports = function(Combokeys) {
+    var oldBind = Combokeys.bind,
         args;
 
-    self.bind = function() {
+    Combokeys.bind = function() {
         args = arguments;
 
         // normal call
         if (typeof args[0] === "string" || args[0] instanceof Array) {
-            return oldBind(args[0], args[1], args[2]);
+            return oldBind.call(this, args[0], args[1], args[2]);
         }
 
         // object passed in
         for (var key in args[0]) {
             if (args[0].hasOwnProperty(key)) {
-                _oldBind(key, args[0][key], args[1]);
+                oldBind.call(this, key, args[0][key], args[1]);
             }
         }
     };
 
-    return self;
-})(Combokeys);
+    return Combokeys;
+};
