@@ -244,6 +244,21 @@ describe("combokeys.bind", function() {
             expect(spy.callCount).to.equal(1, "callback should fire");
             expect(spy.args[0][1]).to.equal("left", "callback should match `left`");
         });
+
+        it("able to bind plus and minus", function() {
+            var spy1 = sinon.spy();
+            var spy2 = sinon.spy();
+
+            var combokeys = new Combokeys(document);
+            combokeys.bind("ctrl+minus", spy1);
+            combokeys.bind("ctrl+plus", spy2);
+
+            KeyEvent.simulate("-".charCodeAt(0), 189, ["ctrl"]);
+            expect(spy1.callCount).to.equal(1, "`ctrl+minus` should fire");
+
+            KeyEvent.simulate("+".charCodeAt(0), 187, ["ctrl"]);
+            expect(spy2.callCount).to.equal(1, "`ctrl+plus` should fire");
+        });
     });
 
     describe("combos with modifiers", function() {

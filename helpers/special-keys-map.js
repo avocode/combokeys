@@ -31,6 +31,8 @@ module.exports = {
     46: "del",
     91: "meta",
     93: "meta",
+    187: "plus",
+    189: "minus",
     224: "meta"
 };
 
