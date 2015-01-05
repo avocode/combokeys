@@ -30,27 +30,27 @@ Main changes are
 
 Get it on your page:
 
-```
+```js
 var Combokeys;
 Combokeys = require("combokeys");
 ```
 
 Instantiate it for the entire page:
 
-```
+```js
 var combokeys = new Combokeys(document);
 ```
 
 Or, instantiate it for one or more specific elements:
 
-```
+```js
 var firstCombokeys = new Combokeys(document.getElementById("first"));
 var secondCombokeys = new Combokeys(document.getElementById("second"));
 ```
 
 Add some combos!
 
-```
+```js
 // single keys
 combokeys.bind('4', function() { console.log('4'); });
 firstCombokeys.bind("?", function() { console.log('show shortcuts!'); });
