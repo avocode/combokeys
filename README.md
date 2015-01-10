@@ -77,6 +77,15 @@ Combokeys.bind('up up down down left right left right b a enter', function() {
 });
 ```
 
+You can also bind the plus (and minus) keys conveniently:
+
+```
+Combokeys.bind(['mod+plus', 'mod+minus'], function(e) {
+    e.preventDefault();
+    console.log("Override browser zoom!");
+});
+```
+
 ## Why Combokeys?
 
 There are a number of other similar libraries out there so what makes this one different?
