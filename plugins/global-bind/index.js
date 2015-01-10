@@ -34,4 +34,4 @@ module.exports = function(Combokeys) {
     };
 
     return Combokeys;
-}
+};

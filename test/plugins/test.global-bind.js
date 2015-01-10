@@ -37,7 +37,7 @@ describe("combokeys.bindGlobal", function() {
         require("../../plugins/global-bind")(combokeys);
         combokeys.bindGlobal("z", spy);
 
-        var el = document.createElement('input');
+        var el = document.createElement("input");
         document.body.appendChild(el);
 
         KeyEvent.simulate("Z".charCodeAt(0), 90, undefined, el);
@@ -54,7 +54,7 @@ describe("combokeys.bindGlobal", function() {
         require("../../plugins/global-bind")(combokeys);
         combokeys.bindGlobal("z", spy);
 
-        var el = document.createElement('textarea');
+        var el = document.createElement("textarea");
         document.body.appendChild(el);
 
         KeyEvent.simulate("Z".charCodeAt(0), 90, undefined, el);
@@ -71,7 +71,7 @@ describe("combokeys.bindGlobal", function() {
         require("../../plugins/global-bind")(combokeys);
         combokeys.bindGlobal("z", spy);
 
-        var el = document.createElement('select');
+        var el = document.createElement("select");
         document.body.appendChild(el);
 
         KeyEvent.simulate("Z".charCodeAt(0), 90, undefined, el);
@@ -89,8 +89,8 @@ describe("combokeys.bindGlobal", function() {
         require("../../plugins/global-bind")(combokeys);
         combokeys.bindGlobal("z", spy);
 
-        var el = document.createElement('div');
-        el.contentEditable = 'true';
+        var el = document.createElement("div");
+        el.contentEditable = "true";
         document.body.appendChild(el);
 
         KeyEvent.simulate("Z".charCodeAt(0), 90, undefined, el);
