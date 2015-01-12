@@ -8,7 +8,7 @@
  * usage:
  * Combokeys.bindGlobal("ctrl+s", _saveChanges);
  */
-Combokeys = (function(Combokeys) {
+module.exports = function(Combokeys) {
     var globalCallbacks = {},
         originalStopCallback = Combokeys.stopCallback;
 
@@ -21,7 +21,7 @@ Combokeys = (function(Combokeys) {
     };
 
     Combokeys.bindGlobal = function(keys, callback, action) {
-        Combokeys.bind(keys, callback, action);
+        this.bind(keys, callback, action);
 
         if (keys instanceof Array) {
             for (var i = 0; i < keys.length; i++) {
@@ -34,4 +34,4 @@ Combokeys = (function(Combokeys) {
     };
 
     return Combokeys;
-})(Combokeys);
+};

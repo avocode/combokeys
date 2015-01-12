@@ -1,11 +1,11 @@
 /* eslint-env node, browser */
+"use strict";
 /**
  * This extension allows you to record a sequence using Combokeys.
  *
  * @author Dan Tao <daniel.tao@gmail.com>
  */
-(function(Combokeys) {
-    "use strict";
+module.exports = function(Combokeys) {
     /**
      * the sequence currently being recorded
      *
@@ -51,67 +51,22 @@
         origHandleKey = Combokeys.handleKey;
 
     /**
-     * handles a character key event
-     *
-     * @param {string} character
-     * @param {Array} modifiers
-     * @param {Event} e
-     * @returns void
+     * orders key combos
+     * @param  {Array} x
+     * @param  {Array} y
+     * @return {boolean}
      */
-    function handleKey(character, modifiers, e) {
-        var i;
-        // remember this character if we're currently recording a sequence
-        if (e.type === "keydown") {
-            if (character.length === 1 && recordedCharacterKey) {
-                recordCurrentCombo();
-            }
-
-            for (i = 0; i < modifiers.length; ++i) {
-                recordKey(modifiers[i]);
-            }
-            recordKey(character);
-
-        // once a key is released, all keys that were held down at the time
-        // count as a keypress
-        } else if (e.type === "keyup" && currentRecordedKeys.length > 0) {
-            recordCurrentCombo();
-        }
-    }
-
-    /**
-     * marks a character key as held down while recording a sequence
-     *
-     * @param {string} key
-     * @returns void
-     */
-    function recordKey(key) {
-        var i;
-
-        // one-off implementation of Array.indexOf, since IE6-9 don't support it
-        for (i = 0; i < currentRecordedKeys.length; ++i) {
-            if (currentRecordedKeys[i] === key) {
-                return;
-            }
+    function sortKeyCombo(x, y) {
+        // modifier keys always come first, in alphabetical order
+        if (x.length > 1 && y.length === 1) {
+            return -1;
+        } else if (x.length === 1 && y.length > 1) {
+            return 1;
         }
 
-        currentRecordedKeys.push(key);
-
-        if (key.length === 1) {
-            recordedCharacterKey = true;
-        }
-    }
-
-    /**
-     * marks whatever key combination that's been recorded so far as finished
-     * and gets ready for the next combo
-     *
-     * @returns void
-     */
-    function recordCurrentCombo() {
-        recordedSequence.push(currentRecordedKeys);
-        currentRecordedKeys = [];
-        recordedCharacterKey = false;
-        restartRecordTimer();
+        // character keys come next (list should contain no duplicates,
+        // so no need for equality check)
+        return x > y ? 1 : -1;
     }
 
     /**
@@ -127,19 +82,7 @@
         var i;
 
         for (i = 0; i < sequence.length; ++i) {
-            sequence[i].sort(function(x, y) {
-                // modifier keys always come first, in alphabetical order
-                if (x.length > 1 && y.length === 1) {
-                    return -1;
-                } else if (x.length === 1 && y.length > 1) {
-                    return 1;
-                }
-
-                // character keys come next (list should contain no duplicates,
-                // so no need for equality check)
-                return x > y ? 1 : -1;
-            });
-
+            sequence[i].sort(sortKeyCombo);
             sequence[i] = sequence[i].join("+");
         }
     }
@@ -178,6 +121,70 @@
     }
 
     /**
+     * marks whatever key combination that's been recorded so far as finished
+     * and gets ready for the next combo
+     *
+     * @returns void
+     */
+    function recordCurrentCombo() {
+        recordedSequence.push(currentRecordedKeys);
+        currentRecordedKeys = [];
+        recordedCharacterKey = false;
+        restartRecordTimer();
+    }
+
+    /**
+     * marks a character key as held down while recording a sequence
+     *
+     * @param {string} key
+     * @returns void
+     */
+    function recordKey(key) {
+        var i;
+
+        // one-off implementation of Array.indexOf, since IE6-9 don't support it
+        for (i = 0; i < currentRecordedKeys.length; ++i) {
+            if (currentRecordedKeys[i] === key) {
+                return;
+            }
+        }
+
+        currentRecordedKeys.push(key);
+
+        if (key.length === 1) {
+            recordedCharacterKey = true;
+        }
+    }
+
+    /**
+     * handles a character key event
+     *
+     * @param {string} character
+     * @param {Array} modifiers
+     * @param {Event} e
+     * @returns void
+     */
+    function handleKey(character, modifiers, e) {
+        var i;
+        // remember this character if we're currently recording a sequence
+        if (e.type === "keydown") {
+            if (character.length === 1 && recordedCharacterKey) {
+                recordCurrentCombo();
+            }
+
+            for (i = 0; i < modifiers.length; ++i) {
+                recordKey(modifiers[i]);
+            }
+            recordKey(character);
+
+        // once a key is released, all keys that were held down at the time
+        // count as a keypress
+        } else if (e.type === "keyup" && currentRecordedKeys.length > 0) {
+            recordCurrentCombo();
+        }
+    }
+
+    /**
      * records the next sequence and passes it to a callback once it's
      * completed
      *
@@ -189,4 +196,5 @@
         recordedSequenceCallback = callback;
     };
 
-})(Combokeys);
+    return Combokeys;
+};

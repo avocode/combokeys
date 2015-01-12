@@ -1,16 +1,15 @@
 /* eslint-env node, browser */
+"use strict";
 /**
  * adds a pause and unpause method to Combokeys
  * this allows you to enable or disable keyboard shortcuts
  * without having to reset Combokeys and rebind everything
  */
-Combokeys = (function(Combokeys) {
-    "use strict";
-    var self = Combokeys,
-        originalStopCallback = self.stopCallback,
+module.exports = function(Combokeys) {
+    var originalStopCallback = Combokeys.stopCallback,
         enabled = true;
 
-    self.stopCallback = function(e, element, combo) {
+    Combokeys.stopCallback = function(e, element, combo) {
         if (!enabled) {
             return true;
         }
@@ -18,13 +17,13 @@ Combokeys = (function(Combokeys) {
         return originalStopCallback(e, element, combo);
     };
 
-    self.pause = function() {
+    Combokeys.pause = function() {
         enabled = false;
     };
 
-    self.unpause = function() {
+    Combokeys.unpause = function() {
         enabled = true;
     };
 
-    return self;
-})(Combokeys);
+    return Combokeys;
+};
