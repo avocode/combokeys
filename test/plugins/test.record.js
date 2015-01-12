@@ -1,9 +1,6 @@
 /* eslint-env node, browser, mocha */
 /* eslint no-unused-expressions:0 */
 "use strict";
-/* global
-    Event
-*/
 require("es5-shim/es5-shim");
 require("es5-shim/es5-sham");
 var expect = require("chai").expect;
@@ -30,7 +27,10 @@ describe("combokeys.record", function() {
 
         setTimeout(function() {
             expect(spy.callCount).to.equal(1, "callback should fire once");
-            expect(spy.args[0][0]).to.deep.equal(["a", "b", "c", "meta+shift+o"], "all key presses should be recorded");
+            expect(spy.args[0][0]).to.deep.equal(
+                ["a", "b", "c", "meta+shift+o"],
+                "all key presses should be recorded"
+            );
             done();
         }, 1000);
     });

@@ -1,9 +1,6 @@
 /* eslint-env node, browser, mocha */
 /* eslint no-unused-expressions:0 */
 "use strict";
-/* global
-    Event
-*/
 require("es5-shim/es5-shim");
 require("es5-shim/es5-sham");
 var expect = require("chai").expect;
