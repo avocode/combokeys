@@ -1,6 +1,6 @@
 # Combokeys
 
-[![Build Status](https://travis-ci.org/mieky/combokeys.svg?branch=master)](https://travis-ci.org/mieky/combokeys)
+[![Build Status](https://travis-ci.org/mightyiam/combokeys.svg?branch=master)](https://travis-ci.org/mightyiam/combokeys)
 
 Combokeys is a JavaScript library for handling keyboard shortcuts in the browser.
 
