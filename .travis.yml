@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - 0.10
-script: npm run build && npm test
+script: npm test && npm run build
 notifications:
 email:
 - mike@arvela.net
