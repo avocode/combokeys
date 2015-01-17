@@ -1,5 +1,7 @@
 # Combokeys
 
+[![Build Status](https://travis-ci.org/mieky/combokeys.svg?branch=master)](https://travis-ci.org/mieky/combokeys)
+
 Combokeys is a JavaScript library for handling keyboard shortcuts in the browser.
 
 It is licensed under the Apache 2.0 license.
