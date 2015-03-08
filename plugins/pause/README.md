@@ -5,9 +5,13 @@ This extension allows Combokeys to be paused and unpaused without having to rese
 Usage looks like:
 
 ```javascript
+var Combokeys = require('combokeys')
+var combokeys = new Combokeys(document);
+require('combokeys/plugins/pause')(combokeys);
+
 // stop Combokeys events from firing
-Combokeys.pause();
+combokeys.pause();
 
 // allow Combokeys events to fire again
-Combokeys.unpause();
+combokeys.unpause();
 ```
