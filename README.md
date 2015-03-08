@@ -113,9 +113,7 @@ The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback` and `
 
 ## Plugins
 
-Since this project was forked from
-[ccampbell/mousetrap](https://github.com/ccampbell/mousetrap)
-and was converted to CommonJS, the plugins were not converted to CommonJS, so they don't work yet.
+There are [some plugins](https://github.com/PolicyStat/combokeys/tree/master/plugins). See their individual readme files.
 
 ### Bind dictionary
 
