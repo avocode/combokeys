@@ -5,7 +5,11 @@ This extension overwrites the default bind behavior and allows you to bind multi
 Usage looks like:
 
 ```javascript
-Combokeys.bind({
+var Combokeys = require('combokeys');
+var combokeys = new Combokeys(element);
+require('combokeys/plugins/bind-dictionary')(combokeys);
+
+combokeys.bind({
     'a': function() { console.log('a'); },
     'b': function() { console.log('b'); }
 });
