@@ -52,5 +52,8 @@
         "phantomjs": "^1.9.12",
         "sinon": "^1.12.1",
         "zuul": "^1.13.1"
+    },
+    "dependencies": {
+        "add-event-handler": "^1.0.0"
     }
 }
