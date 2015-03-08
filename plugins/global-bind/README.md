@@ -5,7 +5,11 @@ This extension allows you to specify keyboard events that will work anywhere inc
 Usage looks like:
 
 ```javascript
-Combokeys.bindGlobal('ctrl+s', function() {
+var Combokeys = require('combokeys');
+var combokeys = new Combokeys(document);
+require('combokeys/plugins/global-bind')(combokeys);
+
+combokeys.bindGlobal('ctrl+s', function() {
     _save();
 });
 ```
