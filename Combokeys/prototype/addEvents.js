@@ -9,7 +9,7 @@ module.exports = function () {
 
     handleKeyEvent = require("./handleKeyEvent");
 
-    addEvent = require("../../helpers/addEvent");
+    addEvent = require("add-event-handler");
     boundHandler = handleKeyEvent.bind(self);
     addEvent(element, "keypress", boundHandler);
     addEvent(element, "keydown", boundHandler);
