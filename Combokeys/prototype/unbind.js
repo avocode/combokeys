@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 /**
  * unbinds an event to Combokeys
  *
@@ -17,8 +17,8 @@
  * @param {string} action
  * @returns void
  */
-module.exports = function(keys, action) {
-    var self = this;
+module.exports = function (keys, action) {
+  var self = this
 
-    return self.bind(keys, function() {}, action);
-};
+  return self.bind(keys, function () {}, action)
+}

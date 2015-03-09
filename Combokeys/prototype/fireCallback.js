@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * actually calls the callback function
@@ -12,19 +12,19 @@
  * @returns void
  */
 module.exports = function (callback, e, combo, sequence) {
-    var self = this,
-        preventDefault,
-        stopPropagation;
+  var self = this
+  var preventDefault
+  var stopPropagation
 
-    // if this event should not happen stop here
-    if (self.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
-        return;
-    }
+  // if this event should not happen stop here
+  if (self.stopCallback(e, e.target || e.srcElement, combo, sequence)) {
+    return
+  }
 
-    if (callback(e, combo) === false) {
-        preventDefault = require("../../helpers/preventDefault");
-        preventDefault(e);
-        stopPropagation = require("../../helpers/stopPropagation");
-        stopPropagation(e);
-    }
-};
+  if (callback(e, combo) === false) {
+    preventDefault = require('../../helpers/preventDefault')
+    preventDefault(e)
+    stopPropagation = require('../../helpers/stopPropagation')
+    stopPropagation(e)
+  }
+}

@@ -1,10 +1,10 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 module.exports = function () {
-    var self = this;
+  var self = this
 
-    self.instances.forEach(function(combokeys) {
-        combokeys.reset();
-    });
-};
+  self.instances.forEach(function (combokeys) {
+    combokeys.reset()
+  })
+}

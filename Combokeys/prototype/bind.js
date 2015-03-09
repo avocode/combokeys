@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 /**
  * binds an event to Combokeys
  *
@@ -14,10 +14,10 @@
  * @param {string=} action - "keypress", "keydown", or "keyup"
  * @returns void
  */
-module.exports = function(keys, callback, action) {
-    var self = this;
+module.exports = function (keys, callback, action) {
+  var self = this
 
-    keys = keys instanceof Array ? keys : [keys];
-    self.bindMultiple(keys, callback, action);
-    return self;
-};
+  keys = keys instanceof Array ? keys : [keys]
+  self.bindMultiple(keys, callback, action)
+  return self
+}

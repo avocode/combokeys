@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * Converts from a string key combination to an array
@@ -8,9 +8,9 @@
  * @return {Array}
  */
 module.exports = function (combination) {
-    if (combination === "+") {
-        return ["+"];
-    }
+  if (combination === '+') {
+    return ['+']
+  }
 
-    return combination.split("+");
-};
+  return combination.split('+')
+}

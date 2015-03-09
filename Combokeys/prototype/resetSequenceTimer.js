@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 /**
  * called to set a 1 second timeout on the specified sequence
  *
@@ -9,13 +9,13 @@
  * @returns void
  */
 module.exports = function () {
-    var self = this;
+  var self = this
 
-    clearTimeout(self.resetTimer);
-    self.resetTimer = setTimeout(
-        function() {
-        self.resetSequences();
-        },
-        1000
-    );
-};
+  clearTimeout(self.resetTimer)
+  self.resetTimer = setTimeout(
+    function () {
+      self.resetSequences()
+    },
+    1000
+  )
+}
