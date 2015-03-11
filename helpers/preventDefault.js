@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * prevents default for this event
@@ -8,10 +8,10 @@
  * @returns void
  */
 module.exports = function (e) {
-    if (e.preventDefault) {
-        e.preventDefault();
-        return;
-    }
+  if (e.preventDefault) {
+    e.preventDefault()
+    return
+  }
 
-    e.returnValue = false;
-};
+  e.returnValue = false
+}

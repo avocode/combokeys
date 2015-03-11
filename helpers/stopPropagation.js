@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * stops propogation for this event
@@ -8,10 +8,10 @@
  * @returns void
  */
 module.exports = function (e) {
-    if (e.stopPropagation) {
-        e.stopPropagation();
-        return;
-    }
+  if (e.stopPropagation) {
+    e.stopPropagation()
+    return
+  }
 
-    e.cancelBubble = true;
-};
+  e.cancelBubble = true
+}

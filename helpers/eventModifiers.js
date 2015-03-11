@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * takes a key event and figures out what the modifiers are
@@ -8,23 +8,23 @@
  * @returns {Array}
  */
 module.exports = function (e) {
-    var modifiers = [];
+  var modifiers = []
 
-    if (e.shiftKey) {
-        modifiers.push("shift");
-    }
+  if (e.shiftKey) {
+    modifiers.push('shift')
+  }
 
-    if (e.altKey) {
-        modifiers.push("alt");
-    }
+  if (e.altKey) {
+    modifiers.push('alt')
+  }
 
-    if (e.ctrlKey) {
-        modifiers.push("ctrl");
-    }
+  if (e.ctrlKey) {
+    modifiers.push('ctrl')
+  }
 
-    if (e.metaKey) {
-        modifiers.push("meta");
-    }
+  if (e.metaKey) {
+    modifiers.push('meta')
+  }
 
-    return modifiers;
-};
+  return modifiers
+}

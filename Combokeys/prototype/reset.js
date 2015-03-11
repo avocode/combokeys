@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * resets the library back to its initial state. This is useful
@@ -8,9 +8,9 @@
  *
  * @returns void
  */
-module.exports = function() {
-    var self = this;
-    self.callbacks = {};
-    self.directMap = {};
-    return this;
-};
+module.exports = function () {
+  var self = this
+  self.callbacks = {}
+  self.directMap = {}
+  return this
+}

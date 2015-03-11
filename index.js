@@ -1,4 +1,4 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
-module.exports = require("./Combokeys");
+module.exports = require('./Combokeys')

@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * binds multiple combinations to the same callback
@@ -10,9 +10,9 @@
  * @returns void
  */
 module.exports = function (combinations, callback, action) {
-    var self = this;
+  var self = this
 
-    for (var j = 0; j < combinations.length; ++j) {
-        self.bindSingle(combinations[j], callback, action);
-    }
-};
+  for (var j = 0; j < combinations.length; ++j) {
+    self.bindSingle(combinations[j], callback, action)
+  }
+}

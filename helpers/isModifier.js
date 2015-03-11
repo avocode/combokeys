@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
  * determines if the keycode specified is a modifier key or not
@@ -8,5 +8,5 @@
  * @returns {boolean}
  */
 module.exports = function (key) {
-    return key === "shift" || key === "ctrl" || key === "alt" || key === "meta";
-};
+  return key === 'shift' || key === 'ctrl' || key === 'alt' || key === 'meta'
+}

@@ -1,5 +1,5 @@
 /* eslint-env node, browser */
-"use strict";
+'use strict'
 
 /**
 * should we stop this event before firing off callbacks
@@ -8,13 +8,12 @@
 * @param {Element} element
 * @return {boolean}
 */
-module.exports = function(e, element) {
+module.exports = function (e, element) {
+  // if the element has the class "combokeys" then no need to stop
+  if ((' ' + element.className + ' ').indexOf(' combokeys ') > -1) {
+    return false
+  }
 
-    // if the element has the class "combokeys" then no need to stop
-    if ((" " + element.className + " ").indexOf(" combokeys ") > -1) {
-        return false;
-    }
-
-    // stop for input, select, and textarea
-    return element.tagName === "INPUT" || element.tagName === "SELECT" || element.tagName === "TEXTAREA" || element.isContentEditable;
-};
+  // stop for input, select, and textarea
+  return element.tagName === 'INPUT' || element.tagName === 'SELECT' || element.tagName === 'TEXTAREA' || element.isContentEditable
+}
