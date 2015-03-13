@@ -53,3 +53,8 @@ Package.devDependencies = {
 Package.dependencies = {
   'add-event-handler': '^1.0.0'
 }
+Package.standard = {
+  ignore: [
+    'dist/**'
+  ]
+}
