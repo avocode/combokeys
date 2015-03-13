@@ -115,7 +115,7 @@ describe('combokeys.bind', function () {
       expect(spy.callCount).to.equal(1, 'keyup event for `z` should fire')
 
       // for key held down we should only get one key up
-      KeyEvent.simulate('Z'.charCodeAt(0), 90, [], document, 10)
+      KeyEvent.simulate('Z'.charCodeAt(0), 90, [], document.documentElement, 10)
       expect(spy.callCount).to.equal(2, 'keyup event for `z` should fire once for held down key')
     })
 
@@ -383,7 +383,7 @@ describe('combokeys.bind', function () {
       KeyEvent.simulate('a'.charCodeAt(0), 65)
 
       // hold the last key down for a while
-      KeyEvent.simulate('t'.charCodeAt(0), 84, [], document, 10)
+      KeyEvent.simulate('t'.charCodeAt(0), 84, [], document.documentElement, 10)
 
       expect(spy.callCount).to.equal(1, 'callback for `b a t` sequence should fire on keyup')
     })

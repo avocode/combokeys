@@ -56,7 +56,7 @@ KeyEvent.simulate = function (charCode, keyCode, modifiers, element, repeat) {
   }
 
   if (element === undefined) {
-    element = document
+    element = document.documentElement
   }
 
   if (repeat === undefined) {
