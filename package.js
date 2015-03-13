@@ -8,7 +8,7 @@ Package.implements = ['CommonJS/Modules/1.0']
 Package.scripts = {
   lint: 'standard',
   unit: './node_modules/zuul/bin/zuul --phantom -- test/test.combokeys.js test/plugins/test.*.js',
-  build: 'mkdir dist && browserify index.js -o dist/combokeys.js --standalone Combokeys',
+  build: 'mkdir -p dist && browserify index.js -o dist/combokeys.js --standalone Combokeys',
   test: 'npm run lint && npm run unit && npm run build'
 
 }
@@ -52,4 +52,9 @@ Package.devDependencies = {
 }
 Package.dependencies = {
   'add-event-handler': '^1.0.0'
+}
+Package.standard = {
+  ignore: [
+    'dist/**'
+  ]
 }

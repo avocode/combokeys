@@ -14,6 +14,8 @@ module.exports = function (e, element) {
     return false
   }
 
+  var tagName = element.tagName.toLowerCase()
+
   // stop for input, select, and textarea
-  return element.tagName === 'INPUT' || element.tagName === 'SELECT' || element.tagName === 'TEXTAREA' || element.isContentEditable
+  return tagName === 'input' || tagName === 'select' || tagName === 'textarea' || element.isContentEditable
 }
