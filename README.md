@@ -77,9 +77,9 @@ Combokeys.bind('up up down down left right left right b a enter', function() {
 });
 ```
 
-You can also bind the plus (and minus) keys conveniently:
+You can also bind the plus and minus keys conveniently:
 
-```
+```js
 Combokeys.bind(['mod+plus', 'mod+minus'], function(e) {
     e.preventDefault();
     console.log("Override browser zoom!");
