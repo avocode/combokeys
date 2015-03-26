@@ -48,7 +48,7 @@ Package.devDependencies = {
   'mocha': '^2.0.1',
   'phantomjs': '^1.9.12',
   'sinon': '^1.12.1',
-  'zuul': '^1.13.1'
+  'zuul': '^2.1.1'
 }
 Package.dependencies = {
   'add-event-handler': '^1.0.0'

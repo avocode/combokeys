@@ -51,9 +51,7 @@ KeyEvent.prototype.fire = function (element) {
 // triggers a keydown, then a keypress, then a keyup
 KeyEvent.simulate = function (charCode, keyCode, modifiers, element, repeat) {
   'use strict'
-  if (modifiers === undefined) {
-    modifiers = []
-  }
+  modifiers = modifiers || []
 
   if (element === undefined) {
     element = document.documentElement
