@@ -38,7 +38,7 @@ Package.license = {
 Package.devDependencies = {
   standard: '*',
   'auto-package': '^1.0.0',
-  'browserify': '~7.0.3',
+  'browserify': '^9.0.3',
   'chai': '^1.10.0',
   'es5-shim': '^4.0.3',
   'grunt': '~0.4.1',
