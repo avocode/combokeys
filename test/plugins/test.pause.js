@@ -3,7 +3,7 @@
 'use strict'
 require('es5-shim/es5-shim')
 require('es5-shim/es5-sham')
-var expect = require('chai').expect
+var assert = require('proclaim')
 var sinon = require('sinon')
 var Combokeys = require('../..')
 var KeyEvent = require('.././lib/key-event')
@@ -26,6 +26,6 @@ describe('combokeys.pause', function () {
     combokeys.unpause()
     KeyEvent.simulate('A'.charCodeAt(0), 65)
 
-    expect(spy.callCount).to.equal(2, 'callback should fire twice')
+    assert.equal(spy.callCount, 2, 'callback should fire twice')
   })
 })
