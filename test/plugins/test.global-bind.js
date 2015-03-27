@@ -6,7 +6,7 @@
 */
 require('es5-shim/es5-shim')
 require('es5-shim/es5-sham')
-var expect = require('chai').expect
+var assert = require('proclaim')
 var sinon = require('sinon')
 var Combokeys = require('../..')
 var KeyEvent = require('.././lib/key-event')
@@ -25,9 +25,9 @@ describe('combokeys.bindGlobal', function () {
 
     KeyEvent.simulate('Z'.charCodeAt(0), 90)
 
-    expect(spy.callCount).to.equal(1, 'callback should fire once')
-    expect(spy.args[0][0]).to.be.an.instanceOf(Event, 'first argument should be Event')
-    expect(spy.args[0][1]).to.equal('z', 'second argument should be key combo')
+    assert.equal(spy.callCount, 1, 'callback should fire once')
+    assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
+    assert.equal(spy.args[0][1], 'z', 'second argument should be key combo')
   })
 
   it('z key fires when pressing z in input', function () {
@@ -42,9 +42,9 @@ describe('combokeys.bindGlobal', function () {
 
     KeyEvent.simulate('Z'.charCodeAt(0), 90, undefined, el)
 
-    expect(spy.callCount).to.equal(1, 'callback should fire once')
-    expect(spy.args[0][0]).to.be.an.instanceOf(Event, 'first argument should be Event')
-    expect(spy.args[0][1]).to.equal('z', 'second argument should be key combo')
+    assert.equal(spy.callCount, 1, 'callback should fire once')
+    assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
+    assert.equal(spy.args[0][1], 'z', 'second argument should be key combo')
   })
 
   it('z key fires when pressing z in textarea', function () {
@@ -59,9 +59,9 @@ describe('combokeys.bindGlobal', function () {
 
     KeyEvent.simulate('Z'.charCodeAt(0), 90, undefined, el)
 
-    expect(spy.callCount).to.equal(1, 'callback should fire once')
-    expect(spy.args[0][0]).to.be.an.instanceOf(Event, 'first argument should be Event')
-    expect(spy.args[0][1]).to.equal('z', 'second argument should be key combo')
+    assert.equal(spy.callCount, 1, 'callback should fire once')
+    assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
+    assert.equal(spy.args[0][1], 'z', 'second argument should be key combo')
   })
 
   it('z key fires when pressing z in select', function () {
@@ -76,9 +76,9 @@ describe('combokeys.bindGlobal', function () {
 
     KeyEvent.simulate('Z'.charCodeAt(0), 90, undefined, el)
 
-    expect(spy.callCount).to.equal(1, 'callback should fire once')
-    expect(spy.args[0][0]).to.be.an.instanceOf(Event, 'first argument should be Event')
-    expect(spy.args[0][1]).to.equal('z', 'second argument should be key combo')
+    assert.equal(spy.callCount, 1, 'callback should fire once')
+    assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
+    assert.equal(spy.args[0][1], 'z', 'second argument should be key combo')
   })
 
   it('z key fires when pressing z in contenteditable', function () {
@@ -94,9 +94,9 @@ describe('combokeys.bindGlobal', function () {
 
     KeyEvent.simulate('Z'.charCodeAt(0), 90, undefined, el)
 
-    expect(spy.callCount).to.equal(1, 'callback should fire once')
-    expect(spy.args[0][0]).to.be.an.instanceOf(Event, 'first argument should be Event')
-    expect(spy.args[0][1]).to.equal('z', 'second argument should be key combo')
+    assert.equal(spy.callCount, 1, 'callback should fire once')
+    assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
+    assert.equal(spy.args[0][1], 'z', 'second argument should be key combo')
   })
 })
 
@@ -107,10 +107,10 @@ describe('combokeys.unbind', function () {
     require('../../plugins/global-bind')(combokeys)
     combokeys.bindGlobal('a', spy)
     KeyEvent.simulate('a'.charCodeAt(0), 65)
-    expect(spy.callCount).to.equal(1, 'callback for a should fire')
+    assert.equal(spy.callCount, 1, 'callback for a should fire')
 
     combokeys.unbind('a')
     KeyEvent.simulate('a'.charCodeAt(0), 65)
-    expect(spy.callCount).to.equal(1, 'callback for a should not fire after unbind')
+    assert.equal(spy.callCount, 1, 'callback for a should not fire after unbind')
   })
 })

@@ -3,7 +3,7 @@
 'use strict'
 require('es5-shim/es5-shim')
 require('es5-shim/es5-sham')
-var expect = require('chai').expect
+var assert = require('proclaim')
 var sinon = require('sinon')
 var Combokeys = require('../..')
 var KeyEvent = require('.././lib/key-event')
@@ -26,8 +26,9 @@ describe('combokeys.record', function () {
     KeyEvent.simulate('O'.charCodeAt(0), 79, ['meta', 'shift'])
 
     setTimeout(function () {
-      expect(spy.callCount).to.equal(1, 'callback should fire once')
-      expect(spy.args[0][0]).to.deep.equal(
+      assert.equal(spy.callCount, 1, 'callback should fire once')
+      assert.deepEqual(
+        spy.args[0][0],
         ['a', 'b', 'c', 'meta+shift+o'],
         'all key presses should be recorded'
       )

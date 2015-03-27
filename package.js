@@ -39,7 +39,7 @@ Package.devDependencies = {
   standard: '*',
   'auto-package': '^1.0.0',
   'browserify': '^9.0.3',
-  'chai': '^1.10.0',
+  'proclaim': '^3.1.0',
   'es5-shim': '^4.0.3',
   'grunt': '~0.4.1',
   'grunt-complexity': '~0.1.2',
