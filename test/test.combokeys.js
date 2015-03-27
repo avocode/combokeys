@@ -184,15 +184,26 @@ describe('combokeys.bind', function () {
       var combokeys = new Combokeys(element)
       combokeys.bind('command+s', spy)
 
+      if (Event.prototype.preventDefault) {
+        var preventDefaultSpy = sinon.spy(Event.prototype, 'preventDefault')
+      }
+      if (Event.prototype.stopPropagation) {
+        var stopPropagationSpy = sinon.spy(Event.prototype, 'stopPropagation')
+      }
       KeyEvent.simulate('S'.charCodeAt(0), 83, ['meta'], element)
 
       assert.strictEqual(spy.callCount, 1, 'callback should fire')
       assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
       var event = spy.args[0][0]
       if (event.preventDefault) {
-        assert.isTrue(event.defaultPrevented)
+        assert.isTrue(preventDefaultSpy.calledOnce, 'default action was cancelled')
       } else {
-        assert.isTrue(event.cancelBubble)
+        assert.isFalse(event.returnValue, 'default is prevented')
+      }
+      if (event.stopPropagation) {
+        assert.isTrue(stopPropagationSpy.calledOnce, 'propagation was cancelled')
+      } else {
+        assert.isTrue(event.cancelBubble, 'propagation is cancelled')
       }
 
       // try without return false
@@ -204,10 +215,17 @@ describe('combokeys.bind', function () {
       assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
       event = spy.args[0][0]
       if (event.preventDefault) {
-        assert.isFalse(event.defaultPrevented)
+        assert.isTrue(preventDefaultSpy.calledOnce, 'default action was not cancelled')
       } else {
-        assert.isFalse(event.cancelBubble)
+        assert.isTrue(event.returnValue !== false, 'default is not prevented')
       }
+      if (event.stopPropagation) {
+        assert.isTrue(stopPropagationSpy.calledOnce, 'propagation was not cancelled')
+      } else {
+        assert.isFalse(event.cancelBubble, 'propagation is not cancelled')
+      }
+      if (preventDefaultSpy) preventDefaultSpy.restore()
+      if (stopPropagationSpy) stopPropagationSpy.restore()
     })
 
     it('capslock key is ignored', function () {
