@@ -219,6 +219,7 @@ describe('combokeys.bind', function () {
       } else {
         assert.isFalse(event.cancelBubble, 'propagation is not cancelled')
       }
+      stopPropagationSpy.restore()
     })
 
     it('capslock key is ignored', function () {
