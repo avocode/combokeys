@@ -17,6 +17,7 @@ describe('initialization', function () {
     var combokeys = new Combokeys(document.documentElement)
     assert.instanceOf(combokeys, Combokeys)
     assert.strictEqual(combokeys.element, document.documentElement)
+    combokeys.detach()
   })
   it('can initialize multipe instances', function () {
     var first = makeElement()
@@ -39,6 +40,7 @@ describe('combokeys.bind', function () {
     combokeys.bind('z', spy)
     KeyEvent.simulate('Z'.charCodeAt(0), 90, null, document.documentElement)
     assert.strictEqual(spy.callCount, 1)
+    combokeys.detach()
   })
   describe('basic', function () {
     it('z key fires when pressing z', function () {
@@ -672,6 +674,20 @@ describe('combokeys.bind', function () {
         it('"' + key + '" uses "' + type + '"', getCallback(key, keyCode, type, modifiers))
       }
     }
+  })
+})
+
+describe('combokeys.detach', function () {
+  it('detaches', function () {
+    var element = makeElement()
+    var spy = sinon.spy()
+    var combokeys = new Combokeys(element)
+    combokeys.bind('a', spy)
+    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
+    assert.strictEqual(spy.callCount, 1, 'calls back normally')
+    combokeys.detach()
+    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
+    assert.strictEqual(spy.callCount, 1, 'does not call back because detached')
   })
 })
 

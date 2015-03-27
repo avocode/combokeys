@@ -2,16 +2,12 @@
 'use strict'
 module.exports = function () {
   var self = this
-  var addEvent
+  var on = require('dom-event')
   var element = self.element
-  var handleKeyEvent
-  var boundHandler
 
-  handleKeyEvent = require('./handleKeyEvent')
+  self.eventHandler = require('./handleKeyEvent').bind(self)
 
-  addEvent = require('add-event-handler')
-  boundHandler = handleKeyEvent.bind(self)
-  addEvent(element, 'keypress', boundHandler)
-  addEvent(element, 'keydown', boundHandler)
-  addEvent(element, 'keyup', boundHandler)
+  on(element, 'keypress', self.eventHandler)
+  on(element, 'keydown', self.eventHandler)
+  on(element, 'keyup', self.eventHandler)
 }

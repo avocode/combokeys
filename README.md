@@ -77,6 +77,13 @@ Combokeys.bind('up up down down left right left right b a enter', function() {
 });
 ```
 
+When you’re done with it, detach:
+
+```js
+combokeys.detach()
+// and it will not listen on the element any more
+```
+
 You can also bind the plus and minus keys conveniently:
 
 ```js
