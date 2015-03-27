@@ -14,9 +14,9 @@ var makeElement = require('./helpers/make-element')
 
 describe('initialization', function () {
   it('initializes on the document', function () {
-    var combokeys = new Combokeys(document)
+    var combokeys = new Combokeys(document.documentElement)
     expect(combokeys).to.be.an.instanceOf(Combokeys)
-    expect(combokeys.element).to.equal(document)
+    expect(combokeys.element).to.equal(document.documentElement)
   })
   it('can initialize multipe instances', function () {
     var first = makeElement()
@@ -33,6 +33,13 @@ describe('initialization', function () {
 })
 
 describe('combokeys.bind', function () {
+  it('should work', function () {
+    var combokeys = new Combokeys(document.documentElement)
+    var spy = sinon.spy()
+    combokeys.bind('z', spy)
+    KeyEvent.simulate('Z'.charCodeAt(0), 90, null, document.documentElement)
+    expect(spy.callCount).to.equal(1)
+  })
   describe('basic', function () {
     it('z key fires when pressing z', function () {
       var element = makeElement()
