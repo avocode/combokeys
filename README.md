@@ -38,7 +38,7 @@ Combokeys = require("combokeys");
 Instantiate it for the entire page:
 
 ```js
-var combokeys = new Combokeys(document);
+var combokeys = new Combokeys(document.documentElement);
 ```
 
 Or, instantiate it for one or more specific elements:
