@@ -184,15 +184,21 @@ describe('combokeys.bind', function () {
       var combokeys = new Combokeys(element)
       combokeys.bind('command+s', spy)
 
+      var stopPropagationSpy = sinon.spy(Event.prototype, 'stopPropagation')
       KeyEvent.simulate('S'.charCodeAt(0), 83, ['meta'], element)
 
       assert.strictEqual(spy.callCount, 1, 'callback should fire')
       assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
       var event = spy.args[0][0]
       if (event.preventDefault) {
-        assert.isTrue(event.defaultPrevented)
+        assert.isTrue(event.defaultPrevented, 'default is prevented')
       } else {
-        assert.isTrue(event.cancelBubble)
+        assert.isFalse(event.returnValue, 'default is prevented')
+      }
+      if (event.stopPropagation) {
+        assert.isTrue(stopPropagationSpy.calledOnce, 'propagation was cancelled')
+      } else {
+        assert.isTrue(event.cancelBubble, 'propagation is cancelled')
       }
 
       // try without return false
@@ -204,9 +210,14 @@ describe('combokeys.bind', function () {
       assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
       event = spy.args[0][0]
       if (event.preventDefault) {
-        assert.isFalse(event.defaultPrevented)
+        assert.isFalse(event.defaultPrevented, 'default is not prevented')
       } else {
-        assert.isFalse(event.cancelBubble)
+        assert.isNotFalse(event.returnValue, 'default is not prevented')
+      }
+      if (event.stopPropagation) {
+        assert.isTrue(stopPropagationSpy.calledOnce, 'propagation was not cancelled')
+      } else {
+        assert.isFalse(event.cancelBubble, 'propagation is not cancelled')
       }
     })
 
