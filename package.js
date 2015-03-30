@@ -7,7 +7,7 @@ Package.main = 'Combokeys/index.js'
 Package.implements = ['CommonJS/Modules/1.0']
 Package.scripts = {
   lint: 'standard',
-  unit: './node_modules/zuul/bin/zuul --phantom -- test/test.combokeys.js test/plugins/test.*.js',
+  unit: './node_modules/zuul/bin/zuul --phantom -- test',
   build: 'mkdir -p dist && browserify . -o dist/combokeys.js --standalone Combokeys',
   test: 'npm run lint && npm run unit && npm run build'
 

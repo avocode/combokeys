@@ -1,37 +1,9 @@
-/* eslint-env node, browser, mocha */
-/* eslint no-unused-expressions:0 */
-'use strict'
-/* global
-    Event
-*/
-require('es5-shim/es5-shim')
-require('es5-shim/es5-sham')
-var assert = require('proclaim')
-var sinon = require('sinon')
+/* eslint-env mocha, browser */
 var Combokeys = require('..')
-var KeyEvent = require('./lib/key-event')
+var assert = require('proclaim')
 var makeElement = require('./helpers/make-element')
-
-describe('initialization', function () {
-  it('initializes on the document', function () {
-    var combokeys = new Combokeys(document.documentElement)
-    assert.instanceOf(combokeys, Combokeys)
-    assert.strictEqual(combokeys.element, document.documentElement)
-    combokeys.detach()
-  })
-  it('can initialize multipe instances', function () {
-    var first = makeElement()
-    var second = makeElement()
-
-    var firstCombokeys = new Combokeys(first)
-    var secondCombokeys = new Combokeys(second)
-
-    assert.instanceOf(secondCombokeys, Combokeys)
-    assert.notEqual(firstCombokeys, secondCombokeys)
-    assert.strictEqual(firstCombokeys.element, first)
-    assert.strictEqual(secondCombokeys.element, second)
-  })
-})
+var sinon = require('sinon')
+var KeyEvent = require('./lib/key-event')
 
 describe('combokeys.bind', function () {
   it('should work', function () {
@@ -186,15 +158,26 @@ describe('combokeys.bind', function () {
       var combokeys = new Combokeys(element)
       combokeys.bind('command+s', spy)
 
+      if (Event.prototype.preventDefault) {
+        var preventDefaultSpy = sinon.spy(Event.prototype, 'preventDefault')
+      }
+      if (Event.prototype.stopPropagation) {
+        var stopPropagationSpy = sinon.spy(Event.prototype, 'stopPropagation')
+      }
       KeyEvent.simulate('S'.charCodeAt(0), 83, ['meta'], element)
 
       assert.strictEqual(spy.callCount, 1, 'callback should fire')
       assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
       var event = spy.args[0][0]
       if (event.preventDefault) {
-        assert.isTrue(event.defaultPrevented)
+        assert.isTrue(preventDefaultSpy.calledOnce, 'default action was cancelled')
       } else {
-        assert.isTrue(event.cancelBubble)
+        assert.isFalse(event.returnValue, 'default is prevented')
+      }
+      if (event.stopPropagation) {
+        assert.isTrue(stopPropagationSpy.calledOnce, 'propagation was cancelled')
+      } else {
+        assert.isTrue(event.cancelBubble, 'propagation is cancelled')
       }
 
       // try without return false
@@ -206,10 +189,17 @@ describe('combokeys.bind', function () {
       assert.instanceOf(spy.args[0][0], Event, 'first argument should be Event')
       event = spy.args[0][0]
       if (event.preventDefault) {
-        assert.isFalse(event.defaultPrevented)
+        assert.isTrue(preventDefaultSpy.calledOnce, 'default action was not cancelled')
       } else {
-        assert.isFalse(event.cancelBubble)
+        assert.isTrue(event.returnValue !== false, 'default is not prevented')
       }
+      if (event.stopPropagation) {
+        assert.isTrue(stopPropagationSpy.calledOnce, 'propagation was not cancelled')
+      } else {
+        assert.isFalse(event.cancelBubble, 'propagation is not cancelled')
+      }
+      if (preventDefaultSpy) preventDefaultSpy.restore()
+      if (stopPropagationSpy) stopPropagationSpy.restore()
     })
 
     it('capslock key is ignored', function () {
