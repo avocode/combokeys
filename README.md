@@ -71,6 +71,9 @@ combokeys.bind(['command+k', 'ctrl+k'], function() {
 Combokeys.bind('g i', function() { console.log('go to inbox'); });
 Combokeys.bind('* a', function() { console.log('select all'); });
 
+// any character
+combokeys.bind('any-character', function () { console.log('some visual feedback') });
+
 // konami code!
 Combokeys.bind('up up down down left right left right b a enter', function() {
     console.log('konami code');
