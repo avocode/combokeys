@@ -101,6 +101,7 @@ combokeys.bind(['mod+plus', 'mod+minus'], function(e) {
 There are a number of other similar libraries out there so what makes this one different?
 
 - CommonJS, [NPM](https://www.npmjs.org/package/combokeys).
+- You can listen on multiple, specified elements simultaneously.
 - You are not limited to ``keydown`` events (You can specify ``keypress``, ``keydown``, or ``keyup`` or let Combokeys choose for you).
 - You can bind key events directly to special keys such as ``?`` or ``*`` without having to specify ``shift+/`` or ``shift+8`` which are not consistent across all keyboards
 - It works with international keyboard layouts
