@@ -1,36 +1,9 @@
-/* eslint-env node, browser, mocha */
-/* eslint no-unused-expressions:0 */
-'use strict'
-/* global
-    Event
-*/
-require('es5-shim/es5-shim')
-require('es5-shim/es5-sham')
-var assert = require('proclaim')
-var sinon = require('sinon')
+/* eslint-env mocha, browser */
 var Combokeys = require('..')
-var KeyEvent = require('./lib/key-event')
+var assert = require('proclaim')
 var makeElement = require('./helpers/make-element')
-
-describe('initialization', function () {
-  it('initializes on the document', function () {
-    var combokeys = new Combokeys(document.documentElement)
-    assert.instanceOf(combokeys, Combokeys)
-    assert.strictEqual(combokeys.element, document.documentElement)
-  })
-  it('can initialize multipe instances', function () {
-    var first = makeElement()
-    var second = makeElement()
-
-    var firstCombokeys = new Combokeys(first)
-    var secondCombokeys = new Combokeys(second)
-
-    assert.instanceOf(secondCombokeys, Combokeys)
-    assert.notEqual(firstCombokeys, secondCombokeys)
-    assert.strictEqual(firstCombokeys.element, first)
-    assert.strictEqual(secondCombokeys.element, second)
-  })
-})
+var sinon = require('sinon')
+var KeyEvent = require('./lib/key-event')
 
 describe('combokeys.bind', function () {
   it('should work', function () {
@@ -690,37 +663,5 @@ describe('combokeys.bind', function () {
         it('"' + key + '" uses "' + type + '"', getCallback(key, keyCode, type, modifiers))
       }
     }
-  })
-})
-
-describe('combokeys.unbind', function () {
-  it('unbind works', function () {
-    var element = makeElement()
-    var spy = sinon.spy()
-    var combokeys = new Combokeys(element)
-    combokeys.bind('a', spy)
-    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
-    assert.strictEqual(spy.callCount, 1, 'callback for a should fire')
-
-    combokeys.unbind('a')
-    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
-    assert.strictEqual(spy.callCount, 1, 'callback for a should not fire after unbind')
-  })
-
-  it('unbind accepts an array', function () {
-    var element = makeElement()
-    var spy = sinon.spy()
-    var combokeys = new Combokeys(element)
-    combokeys.bind(['a', 'b', 'c'], spy)
-    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
-    KeyEvent.simulate('b'.charCodeAt(0), 66, null, element)
-    KeyEvent.simulate('c'.charCodeAt(0), 67, null, element)
-    assert.strictEqual(spy.callCount, 3, 'callback should have fired 3 times')
-
-    combokeys.unbind(['a', 'b', 'c'])
-    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
-    KeyEvent.simulate('b'.charCodeAt(0), 66, null, element)
-    KeyEvent.simulate('c'.charCodeAt(0), 67, null, element)
-    assert.strictEqual(spy.callCount, 3, 'callback should not fire after unbind')
   })
 })

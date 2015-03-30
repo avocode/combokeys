@@ -1,16 +1,8 @@
-/* eslint-env node, browser, mocha */
-/* eslint no-unused-expressions:0 */
-'use strict'
-require('es5-shim/es5-shim')
-require('es5-shim/es5-sham')
+/* eslint-env mocha */
 var assert = require('proclaim')
 var sinon = require('sinon')
 var Combokeys = require('../..')
 var KeyEvent = require('.././lib/key-event')
-
-afterEach(function () {
-  Combokeys.reset()
-})
 
 describe('combokeys.pause', function () {
   it('pause and unpause works', function () {
