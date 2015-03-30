@@ -22,10 +22,15 @@ module.exports = function (character, modifiers, e, sequenceName, combination, l
   var isModifier
   var modifiersMatch
 
-  // if there are no events related to this keycode
-  if (!self.callbacks[character]) {
-    return []
+  if (action === 'keypress') {
+    // 'any-character' callbacks are only on `keypress`
+    var anyCharCallbacks = self.callbacks['any-character'] || []
+    anyCharCallbacks.forEach(function (callback) {
+      matches.push(callback)
+    })
   }
+
+  if (!self.callbacks[character]) {return matches}
 
   isModifier = require('../../helpers/isModifier')
   // if a modifier key is coming up on its own we should allow it

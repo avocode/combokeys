@@ -19,6 +19,19 @@ describe('combokeys.unbind', function () {
     assert.strictEqual(spy.callCount, 1, 'callback for a should not fire after unbind')
   })
 
+  it('unbinds \'any-character\'', function () {
+    var element = makeElement()
+    var spy = sinon.spy()
+    var combokeys = new Combokeys(element)
+    combokeys.bind('any-character', spy)
+    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
+    assert.strictEqual(spy.callCount, 1, 'just checking the callback')
+    combokeys.unbind('any-character')
+    KeyEvent.simulate('a'.charCodeAt(0), 65, null, element)
+    KeyEvent.simulate('b'.charCodeAt(0), 66, null, element)
+    assert.strictEqual(spy.callCount, 1, 'unbound')
+  })
+
   it('unbind accepts an array', function () {
     var element = makeElement()
     var spy = sinon.spy()
