@@ -129,6 +129,19 @@ describe('combokeys.bind', function () {
       assert.strictEqual(spy2.callCount, 1, 'new callback should fire')
     })
 
+    it('binding of `any-character` works', function () {
+      var element = makeElement()
+      var spy = sinon.spy()
+
+      var combokeys = new Combokeys(element)
+      combokeys.bind('any-character', spy)
+
+      KeyEvent.simulate('A'.charCodeAt(0), 65, null, element)
+      KeyEvent.simulate('B'.charCodeAt(0), 66, null, element)
+      KeyEvent.simulate('C'.charCodeAt(0), 67, null, element)
+      assert.strictEqual(spy.callCount, 3, 'gets called on any character')
+    })
+
     it('binding an array of keys', function () {
       var element = makeElement()
       var spy = sinon.spy()
