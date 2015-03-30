@@ -68,14 +68,14 @@ combokeys.bind(['command+k', 'ctrl+k'], function() {
 });
 
 // gmail style sequences
-Combokeys.bind('g i', function() { console.log('go to inbox'); });
-Combokeys.bind('* a', function() { console.log('select all'); });
+combokeys.bind('g i', function() { console.log('go to inbox'); });
+combokeys.bind('* a', function() { console.log('select all'); });
 
 // any character
 combokeys.bind('any-character', function () { console.log('some visual feedback') });
 
 // konami code!
-Combokeys.bind('up up down down left right left right b a enter', function() {
+combokeys.bind('up up down down left right left right b a enter', function() {
     console.log('konami code');
 });
 ```
@@ -90,7 +90,7 @@ combokeys.detach()
 You can also bind the plus and minus keys conveniently:
 
 ```js
-Combokeys.bind(['mod+plus', 'mod+minus'], function(e) {
+combokeys.bind(['mod+plus', 'mod+minus'], function(e) {
     e.preventDefault();
     console.log("Override browser zoom!");
 });
