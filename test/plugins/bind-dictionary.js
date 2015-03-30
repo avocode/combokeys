@@ -1,19 +1,8 @@
-/* eslint-env node, browser, mocha */
-/* eslint no-unused-expressions:0 */
-'use strict'
-/* global
-    Event
-*/
-require('es5-shim/es5-shim')
-require('es5-shim/es5-sham')
+/* eslint-env browser, mocha */
 var assert = require('proclaim')
 var sinon = require('sinon')
 var Combokeys = require('../..')
 var KeyEvent = require('.././lib/key-event')
-
-afterEach(function () {
-  Combokeys.reset()
-})
 
 describe('combokeys.bind', function () {
   it('bind multiple keys', function () {
