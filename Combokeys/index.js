@@ -81,6 +81,7 @@ module.exports.prototype.resetSequences = require('./prototype/resetSequences')
 module.exports.prototype.fireCallback = require('./prototype/fireCallback')
 module.exports.prototype.bindSequence = require('./prototype/bindSequence')
 module.exports.prototype.resetSequenceTimer = require('./prototype/resetSequenceTimer')
+module.exports.prototype.detach = require('./prototype/detach')
 
 module.exports.instances = []
 module.exports.reset = require('./reset')

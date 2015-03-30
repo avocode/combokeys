@@ -8,6 +8,7 @@ describe('initialization', function () {
     var combokeys = new Combokeys(document.documentElement)
     assert.instanceOf(combokeys, Combokeys)
     assert.strictEqual(combokeys.element, document.documentElement)
+    combokeys.detach()
   })
   it('can initialize multipe instances', function () {
     var first = makeElement()

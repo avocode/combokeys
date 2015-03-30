@@ -12,6 +12,7 @@ describe('combokeys.bind', function () {
     combokeys.bind('z', spy)
     KeyEvent.simulate('Z'.charCodeAt(0), 90, null, document.documentElement)
     assert.strictEqual(spy.callCount, 1)
+    combokeys.detach()
   })
   describe('basic', function () {
     it('z key fires when pressing z', function () {
