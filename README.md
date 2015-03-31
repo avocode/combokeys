@@ -118,7 +118,7 @@ You can also build an AMD-compatible version by running `npm run build`. This cr
 
 The most complete documentation is currently at [Mousetrap, the original project's website](http://craig.is/killing/mice). At the time of this writing, the only differences are in how you get it in your page (It is now a CommonJS module which does not define a global for itself) and that you must instantiate it before binding keys.
 
-The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback` and `.reset`.
+The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback`, `.detach` and `.reset`.
 
 ## Plugins
 
