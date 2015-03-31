@@ -51,7 +51,7 @@ Package.devDependencies = {
   'zuul': '^2.1.1'
 }
 Package.dependencies = {
-  'dom-event': 'mightyiam/dom-event#patch-1'
+  'dom-event': '^0.0.4'
 }
 Package.standard = {
   ignore: [
