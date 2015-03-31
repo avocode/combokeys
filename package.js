@@ -51,7 +51,7 @@ Package.devDependencies = {
   'zuul': '^2.1.1'
 }
 Package.dependencies = {
-  'dom-event': '^0.0.4'
+  'dom-event': '^0.0.5'
 }
 Package.standard = {
   ignore: [
