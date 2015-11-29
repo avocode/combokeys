@@ -19,7 +19,7 @@
     "browser"
   ],
   "name": "combokeys",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "Handles keyboard shortcuts in the browser",
   "main": "Combokeys/index.js",
   "implements": [
