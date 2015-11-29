@@ -22,7 +22,11 @@ module.exports = function (character, modifiers, e, sequenceName, combination, l
   var isModifier
   var modifiersMatch
 
-  if (action === 'keypress') {
+  if (
+      action === 'keypress' &&
+      // Firefox fires keypress for arrows
+      !(e.code && e.code.slice(0, 5) === 'Arrow')
+  ) {
     // 'any-character' callbacks are only on `keypress`
     var anyCharCallbacks = self.callbacks['any-character'] || []
     anyCharCallbacks.forEach(function (callback) {
