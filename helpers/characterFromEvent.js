@@ -9,7 +9,7 @@
  */
 module.exports = function (e) {
   var SPECIAL_KEYS_MAP,
-  SPECIAL_CHARACTERS_MAP
+    SPECIAL_CHARACTERS_MAP
   SPECIAL_KEYS_MAP = require('./special-keys-map')
   SPECIAL_CHARACTERS_MAP = require('./special-characters-map')
 

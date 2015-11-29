@@ -30,7 +30,7 @@ module.exports = function (character, modifiers, e, sequenceName, combination, l
     })
   }
 
-  if (!self.callbacks[character]) {return matches}
+  if (!self.callbacks[character]) { return matches }
 
   isModifier = require('../../helpers/isModifier')
   // if a modifier key is coming up on its own we should allow it
