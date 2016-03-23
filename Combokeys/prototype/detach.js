@@ -1,4 +1,4 @@
-var off = require('dom-event').off
+var off = require('./dom-event').off
 module.exports = function () {
   var self = this
   var element = self.element
