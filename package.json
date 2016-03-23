@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "dom-event": "^0.0.5"
-  },
   "devDependencies": {
     "standard": "*",
     "browserify": "^9.0.3",
