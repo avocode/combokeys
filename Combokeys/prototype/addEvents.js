@@ -2,7 +2,7 @@
 'use strict'
 module.exports = function () {
   var self = this
-  var on = require('dom-event')
+  var on = require('./dom-event')
   var element = self.element
 
   self.eventHandler = require('./handleKeyEvent').bind(self)
