@@ -1,4 +1,4 @@
-# Combokeys [![Build Status](https://travis-ci.org/PolicyStat/combokeys.svg?branch=master)](https://travis-ci.org/PolicyStat/combokeys) [![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
+# Combokeys [![Build Status](https://travis-ci.org/avocode/combokeys.svg?branch=master)](https://travis-ci.org/avocode/combokeys) [![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
 
 Combokeys is a JavaScript library for handling keyboard shortcuts in the browser.
 
