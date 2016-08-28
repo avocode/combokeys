@@ -122,7 +122,7 @@ The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback`, `.de
 
 ## Plugins
 
-There are [some plugins](https://github.com/PolicyStat/combokeys/tree/master/plugins). See their individual readme files.
+There are [some plugins](https://github.com/avocode/combokeys/tree/master/plugins). See their individual readme files.
 
 ### Bind dictionary
 
