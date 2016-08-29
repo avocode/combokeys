@@ -1,4 +1,4 @@
-# Combokeys [![Build Status](https://travis-ci.org/PolicyStat/combokeys.svg?branch=master)](https://travis-ci.org/PolicyStat/combokeys) [![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
+# Combokeys [![Build Status](https://travis-ci.org/avocode/combokeys.svg?branch=master)](https://travis-ci.org/avocode/combokeys) [![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
 
 Combokeys is a JavaScript library for handling keyboard shortcuts in the browser.
 
@@ -122,7 +122,7 @@ The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback`, `.de
 
 ## Plugins
 
-There are [some plugins](https://github.com/PolicyStat/combokeys/tree/master/plugins). See their individual readme files.
+There are [some plugins](https://github.com/avocode/combokeys/tree/master/plugins). See their individual readme files.
 
 ### Bind dictionary
 
