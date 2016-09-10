@@ -4,7 +4,7 @@ Combokeys is a JavaScript library for handling keyboard shortcuts in the browser
 
 It is licensed under the Apache 2.0 license.
 
-It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no external dependencies, and has been tested in the following browsers:
+It is around **3.3kb** minified and gzipped and **9.9kb** minified, has no external dependencies, and has been tested in the following browsers:
 
 - Internet Explorer 6+ (test suite works in IE9+)
 - Safari
