@@ -34,11 +34,11 @@ module.exports = function (e) {
   }
 
   // for non keypress events the special maps are needed
-  if (SPECIAL_KEYS_MAP[e.which]) {
+  if (SPECIAL_KEYS_MAP[e.which] !== undefined) {
     return SPECIAL_KEYS_MAP[e.which]
   }
 
-  if (SPECIAL_CHARACTERS_MAP[e.which]) {
+  if (SPECIAL_CHARACTERS_MAP[e.which] !== undefined) {
     return SPECIAL_CHARACTERS_MAP[e.which]
   }
 

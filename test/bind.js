@@ -290,6 +290,17 @@ describe('combokeys.bind', function () {
       KeyEvent.simulate('+'.charCodeAt(0), 187, ['ctrl'], element)
       assert.strictEqual(spy2.callCount, 1, '`ctrl+plus` should fire')
     })
+
+    it('able to bind num0', function () {
+      var element = makeElement()
+      var spy = sinon.spy()
+
+      var combokeys = new Combokeys(element)
+      combokeys.bind('ctrl+0', spy)
+
+      KeyEvent.simulate('0'.charCodeAt(0), 96, ['ctrl'], element)
+      assert.strictEqual(spy.callCount, 1, '`ctrl+0` should fire')
+    })
   })
 
   describe('combos with modifiers', function () {
