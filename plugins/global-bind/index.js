@@ -33,5 +33,18 @@ module.exports = function (Combokeys) {
     globalCallbacks[keys] = true
   }
 
+  Combokeys.unbindGlobal = function (keys, action) {
+    this.unbind(keys, action)
+
+    if (keys instanceof Array) {
+      for (var i = 0; i < keys.length; i++) {
+        globalCallbacks[keys[i]] = false
+      }
+      return
+    }
+
+    globalCallbacks[keys] = false
+  }
+
   return Combokeys
 }
