@@ -102,7 +102,7 @@ describe('combokeys.unbind', function () {
 
     combokeys.unbind('a')
     KeyEvent.simulate('a'.charCodeAt(0), 65, undefined, el)
-    assert.equal(spy.callCount, 1, 'callback for a should not fire after unbindGlobal')
+    assert.equal(spy.callCount, 1, 'callback for a should not fire after unbind')
 
     // If we now bind the same key without bindGlobal,
     // it's not bound globally
