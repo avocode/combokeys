@@ -21,7 +21,7 @@ module.exports = function (e) {
   var character = characterFromEvent(e)
 
   // no character found then stop
-  if (!character) {
+  if (character === undefined) {
     return
   }
 

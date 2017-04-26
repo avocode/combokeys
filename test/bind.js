@@ -290,6 +290,33 @@ describe('combokeys.bind', function () {
       KeyEvent.simulate('+'.charCodeAt(0), 187, ['ctrl'], element)
       assert.strictEqual(spy2.callCount, 1, '`ctrl+plus` should fire')
     })
+
+    it('able to bind plus and minus from numeric keypad', function() {
+      var element = makeElement()
+      var spy1 = sinon.spy()
+      var spy2 = sinon.spy()
+
+      var combokeys = new Combokeys(element)
+      combokeys.bind('ctrl+minus', spy1)
+      combokeys.bind('ctrl+plus', spy2)
+
+      KeyEvent.simulate('-'.charCodeAt(0), 109, ['ctrl'], element)
+      assert.strictEqual(spy1.callCount, 1, '`ctrl+minus` should fire')
+
+      KeyEvent.simulate('+'.charCodeAt(0), 107, ['ctrl'], element)
+      assert.strictEqual(spy2.callCount, 1, '`ctrl+plus` should fire')
+    })
+
+    it('able to bind 0 from numeric keypad', function () {
+      var element = makeElement()
+      var spy = sinon.spy()
+
+      var combokeys = new Combokeys(element)
+      combokeys.bind('ctrl+0', spy)
+
+      KeyEvent.simulate('0'.charCodeAt(0), 96, ['ctrl'], element)
+      assert.strictEqual(spy.callCount, 1, '`ctrl+0` should fire')
+    })
   })
 
   describe('combos with modifiers', function () {
