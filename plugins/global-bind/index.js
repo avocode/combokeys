@@ -11,6 +11,7 @@
 module.exports = function (Combokeys) {
   var globalCallbacks = {}
   var originalStopCallback = Combokeys.stopCallback
+  var originalUnbind = Combokeys.unbind
 
   Combokeys.stopCallback = function (e, element, combo, sequence) {
     if (globalCallbacks[combo] || globalCallbacks[sequence]) {
@@ -31,6 +32,19 @@ module.exports = function (Combokeys) {
     }
 
     globalCallbacks[keys] = true
+  }
+
+  Combokeys.unbind = function (keys, action) {
+    originalUnbind.call(this, keys, action)
+
+    if (keys instanceof Array) {
+      for (var i = 0; i < keys.length; i++) {
+        globalCallbacks[keys[i]] = false
+      }
+      return
+    }
+
+    globalCallbacks[keys] = false
   }
 
   return Combokeys

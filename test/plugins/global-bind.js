@@ -93,13 +93,21 @@ describe('combokeys.unbind', function () {
   it('unbind works', function () {
     var spy = sinon.spy()
     var combokeys = new Combokeys(document)
+    var el = document.createElement('input')
+    document.body.appendChild(el)
     require('../../plugins/global-bind')(combokeys)
     combokeys.bindGlobal('a', spy)
-    KeyEvent.simulate('a'.charCodeAt(0), 65)
+    KeyEvent.simulate('a'.charCodeAt(0), 65, undefined, el)
     assert.equal(spy.callCount, 1, 'callback for a should fire')
 
     combokeys.unbind('a')
-    KeyEvent.simulate('a'.charCodeAt(0), 65)
+    KeyEvent.simulate('a'.charCodeAt(0), 65, undefined, el)
     assert.equal(spy.callCount, 1, 'callback for a should not fire after unbind')
+
+    // If we now bind the same key without bindGlobal,
+    // it's not bound globally
+    combokeys.bind('a', spy)
+    KeyEvent.simulate('a'.charCodeAt(0), 65, undefined, el)
+    assert.equal(spy.callCount, 1, 'callback for a should not fire in an input after bind')
   })
 })
