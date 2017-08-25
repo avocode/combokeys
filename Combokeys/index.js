@@ -32,7 +32,7 @@ module.exports = function (element) {
    *
    * @type {null|number}
    */
-  self.resetTimer
+  self.resetTimer = null
 
   /**
    * temporary state where we will ignore the next keyup

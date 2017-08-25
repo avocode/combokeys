@@ -291,7 +291,7 @@ describe('combokeys.bind', function () {
       assert.strictEqual(spy2.callCount, 1, '`ctrl+plus` should fire')
     })
 
-    it('able to bind plus and minus from numeric keypad', function() {
+    it('able to bind plus and minus from numeric keypad', function () {
       var element = makeElement()
       var spy1 = sinon.spy()
       var spy2 = sinon.spy()
