@@ -120,6 +120,9 @@ The most complete documentation is currently at [Mousetrap, the original project
 
 The public API consists of `.bind`, `.unbind`, `.trigger`, `.stopCallback`, `.detach` and `.reset`.
 
+## Limitations
+- This library does not support binding multiple handlers to the same key/key combo. only the last bind will fire.
+
 ## Plugins
 
 There are [some plugins](https://github.com/avocode/combokeys/tree/master/plugins). See their individual readme files.
