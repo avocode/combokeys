@@ -1,9 +1,17 @@
 /* eslint-env node, browser */
 'use strict'
 
-module.exports = function (element) {
+module.exports = function (element, options) {
   var self = this
   var Combokeys = self.constructor
+
+  /**
+   * an object of passed options
+   *
+   * @type { storeInstancesGlobally?: true }
+   */
+
+  self.options = Object.assign({ storeInstancesGlobally: true }, options || {})
 
   /**
    * a list of all the callbacks setup via Combokeys.bind()
@@ -60,7 +68,10 @@ module.exports = function (element) {
 
   self.addEvents()
 
-  Combokeys.instances.push(self)
+  if (self.options.storeInstancesGlobally) {
+    Combokeys.instances.push(self)
+  }
+
   return self
 }
 
