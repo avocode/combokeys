@@ -26,6 +26,8 @@ module.exports = function (character, modifiers, e, sequenceName, combination, l
       action === 'keypress' &&
       // Firefox fires keypress for arrows
       !(e.code && e.code.slice(0, 5) === 'Arrow')
+      && !e.ctrlKey
+      && !e.metaKey
   ) {
     // 'any-character' callbacks are only on `keypress`
     var anyCharCallbacks = self.callbacks['any-character'] || []
